@@ -1,1 +1,0 @@
-An educational project
