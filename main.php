@@ -1,5 +1,7 @@
 <?php 
-include("products.php");
+$products = include("products.php");
+include("classes/Products.php");
+$product = new Products($products);
 ?>
 <main>
     <h1 class="products-header">Products:</h1>
@@ -12,5 +14,19 @@ include("products.php");
                 <span class="price"><?= $val['price'] ?>₴</span>
             </a>
         <?php endforeach; ?>
+        <?php
+        try {
+            $product->get_product('test');
+        } catch (Product_id_not_exists $e) {
+            echo $e->getMessage();
+        }
+
+        try {
+            echo '<br>';
+            print_r($product->get_product('Supernatural T-shirt'));
+        } catch (Product_id_not_exists $e) {
+            echo $e->getMessage();
+        }
+        ?>
     </section>
 </main>
