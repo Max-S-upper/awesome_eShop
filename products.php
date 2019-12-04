@@ -1,5 +1,5 @@
 <?php 
-$products = array(
+return array(
     "Xiaomi Poco F1" => array(
         "picture" => "poco.jpg",
         "quantity" => 15,
@@ -41,4 +41,3 @@ $products = array(
         "price" => 1600
     )
 );
-?>

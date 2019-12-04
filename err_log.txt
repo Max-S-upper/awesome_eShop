@@ -1,0 +1,6 @@
+[2019-12-03 21:47:40]:  Undefined variable: database in /home/max/nix/index.php on line 20
+[2019-12-03 21:48:41]:  Undefined variable: database in /home/max/nix/index.php on line 18
+[2019-12-03 22:33:29]:  Array to string conversion in /home/max/nix/main.php on line 25
+[2019-12-03 22:34:45]:  Array to string conversion in /home/max/nix/main.php on line 25
+[2019-12-03 22:35:05]:  Array to string conversion in /home/max/nix/main.php on line 25
+[2019-12-03 22:35:21]:  Array to string conversion in /home/max/nix/main.php on line 25
