@@ -1,0 +1,13 @@
+[2019-12-07 22:30:41]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productssstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:30:41]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productsfstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:31:03]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productssstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:31:04]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productsfstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:37:55]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productssstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:37:55]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productsfstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:38:33]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productssstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:38:34]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productsfstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:38:38]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productssstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:38:38]:  Undefined variable: products in /home/max/awesome_eShop/views/main/main.php on line 5
+[2019-12-07 22:38:38]:  Invalid argument supplied for foreach() in /home/max/awesome_eShop/views/main/main.php on line 5
+[2019-12-07 22:38:40]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productsfstorage' in /home/max/awesome_eShop/components/Router.php on line 31
+[2019-12-07 22:46:58]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productsfstorage' in /home/max/awesome_eShop/components/Router.php on line 31
