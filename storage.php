@@ -43,7 +43,7 @@ return array(
         "price" => 1000000
     ),
     "Road to the dream backpack" => array(
-        "id" => 0,
+        "id" => 7,
         "picture" => "rd_backpack.jpg",
         "quantity" => 8,
         "price" => 1600
