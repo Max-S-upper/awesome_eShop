@@ -41,6 +41,41 @@
     text-align: center;
 }
 
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #7cd2b21f;
+}
+
+.login .error {
+    color: red;
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.login input[name=email],
+.login input[name=password] {
+    height: 30px;
+    margin-bottom: 7px;
+    text-align: center;
+    border-radius: 3px;
+    background: white;
+}
+
+input[type="submit"] {
+    border-radius: 3px;
+    width: 170px;
+    height: 31px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1200px) {
     .products {
         grid-template-columns: 1fr 1fr 1fr;
