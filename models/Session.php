@@ -15,6 +15,11 @@ class Session {
         else return session_name();
     }
 
+    public static function getSavePath() {
+        if (!self::sessionExists()) throw new Session_not_exists_getName("Error: Can't get session save path. Session hasn't been started");
+        else return session_save_path();
+    }
+
     public static function contains($key) {
         if (!self::sessionExists()) throw new Session_not_exists_contains("Error: Can't get session name. Session hasn't been started");
         else {
