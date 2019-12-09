@@ -9,3 +9,4 @@ class Session_not_exists_get extends Exception {}
 class Session_not_exists_set extends Exception {}
 class Session_not_exists_delete extends Exception {}
 class Session_not_exists_getName extends Exception {}
+class Session_not_exists_contains extends Exception {}
