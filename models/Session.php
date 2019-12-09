@@ -33,6 +33,11 @@ class Session {
         else return false;
     }
 
+    public static function cookieExists() {
+        if (isset($_COOKIE['PHPSESSID'])) return true;
+        else return false;
+    }
+
     public static function set($key, $val) {
         if (self::sessionExists()) $_SESSION[$key] = $val;
         else throw new Session_not_exists_set("Error: Can't set session value. Session hasn't been started");
