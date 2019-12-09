@@ -32,12 +32,30 @@ class StorageController {
     public function get_product_by_id($id) {
         try {
             $products = Storage::get_product_by_id($id);
+            try {
+                Session::start();
+            } catch (Session_start_exists $e) {
+                $err = $e->getMessage();
+            }
+
+            if (!$err) {
+                try {
+                    $usr_email = Session::get('email');
+                } catch (Session_get_exists $e) {
+                    $err = $e->getMessage();
+                }
+            }
         } catch (Product_id_not_exists $e) {
-            echo $e->getMessage();
+            $err = $e->getMessage();
         }
 
-        include(ROOT.'/views/includes/header.php');
-        include(ROOT.'/views/main/main.php');
-        include(ROOT.'/views/includes/footer.php');
+        if (!$err) {
+            if ($usr_email) include(ROOT.'/views/includes/header_signed.php');
+            else include(ROOT.'/views/includes/header.php');
+            include(ROOT.'/views/main/main.php');
+            include(ROOT.'/views/includes/footer.php');
+        }
+
+        else echo $err;
     }
 }
