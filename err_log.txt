@@ -1,1 +1,0 @@
-[2019-12-08 22:53:48]:  call_user_func_array() expects parameter 1 to be a valid callback, class 'StorageController' does not have a method 'get_productsfstorage' in /home/max/awesome_eShop/components/Router.php on line 31
