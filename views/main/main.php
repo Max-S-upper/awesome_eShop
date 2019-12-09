@@ -3,7 +3,7 @@
     <section class="products">
         <?php
         foreach($products as $name => $val): ?>
-            <a href="" class="product">
+            <a href="show/<?= $val['id'] ?>" class="product">
                 <img src="/template/images/<?= $val['picture'] ?>" alt="<?= $name ?>">
                 <span class="name"><?= $name ?></span>
                 <span class="quantity">Available:<?= $val['quantity'] ?></span>
