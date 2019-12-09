@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/template/css/header.css">
     <link rel="stylesheet" href="/template/css/main.css">
+    <link rel="stylesheet" href="/template/css/successful_authorization.css">
     <link rel="stylesheet" href="/template/css/index.css">
     <link rel="stylesheet" href="/template/css/footer.css">
     <title>Awesome eShop</title>
@@ -18,8 +19,8 @@
                     <a href="http://eshop.com/">Awesome eShop</a>
                 </div>
                 <div>
-                    <a href="login">Sign in</a>
-                    <a href="#">Sign up</a>
+                    <a href="#"><?= $usr_email; ?></a>
+                    <a href="logout">Log out</a>
                 </div>
             </nav>
         </header>
