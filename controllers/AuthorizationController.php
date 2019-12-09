@@ -3,9 +3,23 @@ include_once(ROOT.'/models/Session.php');
 include_once(ROOT.'/models/Authorization.php');
 class AuthorizationController {
     public function show_authorization_page() {
-        include(ROOT.'/views/includes/header.php');
-        include(ROOT.'/views/main/login.php');
-        include(ROOT.'/views/includes/footer.php');
+        try {
+            Session::start();
+        } catch (Session_start_exists $e) {
+            $err = $e->getMessage();
+        }
+
+        if (!$err) {
+            try {
+                if (Session::contains('email')) header("Location: /");
+            } catch (Session_not_exists_contains $e) {
+                $err = $e->getMessage();
+            }
+
+            include(ROOT.'/views/includes/header.php');
+            include(ROOT.'/views/main/login.php');
+            include(ROOT.'/views/includes/footer.php');
+        }
     }
 
     public function check_authorization() {
