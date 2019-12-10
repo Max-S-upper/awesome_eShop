@@ -1,12 +1,28 @@
 <?php
 include_once(ROOT.'/exceptions.php');
+include_once(ROOT.'/models/Session.php');
 class Authorization {
-    public static function check_authorization($usr_email, $usr_password) {
-        $email = self::get_email();
-        $password = self::get_password();
-        if ($usr_email != $email) throw new Account_not_exists("Account with this email doesn't exist");
-        else if ($usr_email == $email && $usr_password != $password) throw new Wrong_password("Wrong password");
-        else return true;
+    public static function auth($email, $password) {
+        if (!Session::sessionExists()) Session::start();
+        if (Session::contains('email')) return true;
+        else {
+            if (!self::is_email($email)) throw new Account_not_exists("Account with this email doesn't exist");
+            else if (!self::is_password($password)) throw new Wrong_password("Wrong password");
+            else {
+                Session::set('email', $email);
+                return true;
+            }
+        }
+    }
+
+    public static function is_email($email) {
+        if ($email == self::get_email()) return true;
+        else return false;
+    }
+
+    public static function is_password($password) {
+        if ($password == self::get_password()) return true;
+        else return false;
     }
 
     public static function get_email() {
