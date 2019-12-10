@@ -12,6 +12,7 @@ class UserController {
         if (!$err) {
             try {
                 Session::delete('email');
+                Session::delete('login_err');
             } catch (Session_not_exists_delete $e) {
                 $err = $e->getMessage();
             }
