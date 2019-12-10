@@ -1,6 +1,6 @@
 <?php
 include_once(ROOT.'/exceptions.php');
-include_once(ROOT.'/models/Session.php');
+include_once(ROOT.'/Session.php');
 class Authorization {
     public static function auth($email, $password) {
         if (!Session::sessionExists()) Session::start();
