@@ -1,5 +1,5 @@
 <?php
-include_once(ROOT.'/models/Session.php');
+include_once(ROOT.'/Session.php');
 include_once(ROOT.'/models/Authorization.php');
 class AuthorizationController {
     public function show_authorization_page() {
