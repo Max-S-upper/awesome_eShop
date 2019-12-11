@@ -21,7 +21,7 @@ class Router {
                 $segments = explode('/', $internalRoute);
                 $controllerName = ucfirst(array_shift($segments)).'Controller';
                 $actionName = array_shift($segments);
-                $controllerFile = ROOT."/controllers/$controllerName.php";
+                $controllerFile = ROOT."/application/controllers/$controllerName.php";
                 $parameters = $segments;
                 if (file_exists($controllerFile)) {
                     include_once($controllerFile);

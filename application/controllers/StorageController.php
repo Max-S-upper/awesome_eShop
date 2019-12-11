@@ -1,5 +1,5 @@
 <?php
-include_once(ROOT.'/models/Storage.php');
+include_once(ROOT.'/application/models/Storage.php');
 include_once(ROOT.'/Session.php');
 include_once(ROOT.'/exceptions.php');
 class StorageController {
@@ -13,16 +13,16 @@ class StorageController {
         if (!$err) {
             try {
                 $products = Storage::get_products();
-                $usr_email = Session::get('email');
+                if (Session::contains('email')) $usr_email = Session::get('email');
             } catch (Session_get_exists $e) {
                 $err = $e->getMessage();
             }
 
             if (!$err) {
-                if ($usr_email) include(ROOT.'/views/includes/header_signed.php');
-                else include(ROOT.'/views/includes/header.php');
-                include(ROOT.'/views/main/main.php');
-                include(ROOT.'/views/includes/footer.php');
+                if ($usr_email) include(ROOT.'/application/views/includes/header_signed.php');
+                else include(ROOT.'/application/views/includes/header.php');
+                include(ROOT.'/application/views/main/main.php');
+                include(ROOT.'/application/views/includes/footer.php');
             }
 
             else echo $err;
@@ -50,10 +50,10 @@ class StorageController {
         }
 
         if (!$err) {
-            if ($usr_email) include(ROOT.'/views/includes/header_signed.php');
-            else include(ROOT.'/views/includes/header.php');
-            include(ROOT.'/views/main/main.php');
-            include(ROOT.'/views/includes/footer.php');
+            if ($usr_email) include(ROOT.'/application/views/includes/header_signed.php');
+            else include(ROOT.'/application/views/includes/header.php');
+            include(ROOT.'/application/views/main/main.php');
+            include(ROOT.'/application/views/includes/footer.php');
         }
 
         else echo $err;

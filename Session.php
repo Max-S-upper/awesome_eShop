@@ -44,7 +44,7 @@ class Session {
     }
 
     public static function get($key) {
-        if (self::sessionExists()) return $_SESSION[$key];
+        if (self::sessionExists() && array_key_exists($key, $_SESSION)) return $_SESSION[$key];
         else throw new Session_not_exists_get("Error: Can't get session value. Session hasn't been started");
     }
 
