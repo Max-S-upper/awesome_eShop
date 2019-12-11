@@ -1,6 +1,6 @@
 <?php
 include_once(ROOT.'/Session.php');
-include_once(ROOT.'/models/Authorization.php');
+include_once(ROOT.'/application/models/Authorization.php');
 class AuthorizationController {
     public function show_authorization_page() {
         if (!Session::sessionExists()) {
@@ -19,9 +19,9 @@ class AuthorizationController {
                 $err = $e->getMessage();
             }
 
-            include(ROOT.'/views/includes/header.php');
-            include(ROOT.'/views/main/login.php');
-            include(ROOT.'/views/includes/footer.php');
+            include(ROOT.'/application/views/includes/header.php');
+            include(ROOT.'/application/views/main/login.php');
+            include(ROOT.'/application/views/includes/footer.php');
         }
 
         else echo $start_err;
@@ -48,8 +48,8 @@ class AuthorizationController {
     public function show_welcome_page() {
         if (!Session::sessionExists()) Session::start();
         $usr_email = Session::get('email');
-        include(ROOT.'/views/includes/header_signed.php');
-        include(ROOT . '/views/main/successful_authorization.php');
-        include(ROOT.'/views/includes/footer.php');
+        include(ROOT.'/application/views/includes/header_signed.php');
+        include(ROOT.'/application/views/main/successful_authorization.php');
+        include(ROOT.'/application/views/includes/footer.php');
     }
 }

@@ -4,7 +4,7 @@
         <?php
         foreach($products as $name => $val): ?>
             <a href="http://eshop.com/show/<?= $val['id'] ?>" class="product">
-                <img src="/template/images/<?= $val['picture'] ?>" alt="<?= $name ?>">
+                <img src="/public/images/<?= $val['picture'] ?>" alt="<?= $name ?>">
                 <span class="name"><?= $name ?></span>
                 <span class="quantity">Available:<?= $val['quantity'] ?></span>
                 <span class="price"><?= $val['price'] ?>₴</span>

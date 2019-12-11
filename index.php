@@ -12,7 +12,7 @@ function err_handler($errno, $errstr, $errfile, $errline) {
 }
 
 define('ROOT', dirname(__FILE__));
-require_once (ROOT.'/components/Router.php');
+require_once (ROOT.'/application/components/Router.php');
 
 $routes = new Router();
 $routes->run();
