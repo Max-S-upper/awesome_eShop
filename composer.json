@@ -1,0 +1,18 @@
+{
+    "name": "max/eshop",
+    "description": "Educational project",
+    "type": "project",
+    "require": {
+        "monolog/monolog": "^2.0",
+        "phpunit/phpunit": "^8.5"
+    },
+    "authors": [
+        {
+            "name": "Max",
+            "email": "maxim.sokolsky@gmail.com"
+        }
+    ],
+   "autoload": {
+       "psr-4": {"Acme\\": "src/"}
+   }
+}
