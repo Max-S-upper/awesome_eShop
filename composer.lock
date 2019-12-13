@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2aaffb84e6a5d8c2e7a904df8ef8ce5",
+    "content-hash": "8a4e633c67213adb5692270fbb5e03b6",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -61,6 +61,40 @@
                 "instantiate"
             ],
             "time": "2019-10-21T16:45:58+00:00"
+        },
+        {
+            "name": "max-s-upper/my_first_smile_package",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Max-S-upper/my_first_package.git",
+                "reference": "1a638f6e6eece4de7067cb126f6095048f6acd05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Max-S-upper/my_first_package/zipball/1a638f6e6eece4de7067cb126f6095048f6acd05",
+                "reference": "1a638f6e6eece4de7067cb126f6095048f6acd05",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "^2.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "app"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Max",
+                    "email": "maxim.sokolsky@gmail.com"
+                }
+            ],
+            "description": "My first composer package",
+            "time": "2019-12-13T07:47:42+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1602,6 +1636,40 @@
             "time": "2019-06-13T22:48:21+00:00"
         },
         {
+            "name": "too-easy/fir",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tooEassy/composer.git",
+                "reference": "d08288d0b324804707c647a89a5a9c0416a0c0f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tooEassy/composer/zipball/d08288d0b324804707c647a89a5a9c0416a0c0f3",
+                "reference": "d08288d0b324804707c647a89a5a9c0416a0c0f3",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "^2.0.1",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Artur",
+                    "email": "lavrinovichartur@gmail.com"
+                }
+            ],
+            "description": "first package",
+            "time": "2019-12-13T07:37:35+00:00"
+        },
+        {
             "name": "webmozart/assert",
             "version": "1.6.0",
             "source": {
@@ -1653,7 +1721,10 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "max-s-upper/my_first_smile_package": 20,
+        "too-easy/fir": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

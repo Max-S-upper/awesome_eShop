@@ -1,11 +1,16 @@
 <?php
-include_once(ROOT.'/Session.php');
-include_once(ROOT.'/exceptions.php');
-class UserController {
-    public function logout() {
+namespace application\controllers;
+
+use application\Session;
+use application\exceptions\SessionException;
+
+class UserController
+{
+    public function logout()
+    {
         try {
             Session::start();
-        } catch (Session_start_exists $e) {
+        } catch (SessionException $e) {
             $err = $e->getMessage();
         }
 
@@ -13,7 +18,7 @@ class UserController {
             try {
                 Session::delete('email');
                 Session::delete('login_err');
-            } catch (Session_not_exists_delete $e) {
+            } catch (SessionException $e) {
                 $err = $e->getMessage();
             }
 

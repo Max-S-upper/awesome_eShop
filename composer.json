@@ -4,7 +4,9 @@
     "type": "project",
     "require": {
         "monolog/monolog": "^2.0",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "max-s-upper/my_first_smile_package": "dev-master",
+        "too-easy/fir": "dev-master"
     },
     "authors": [
         {
