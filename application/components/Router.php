@@ -1,4 +1,11 @@
 <?php
+namespace application\components;
+use application\controllers\StorageController as StorageController;
+
+use application\controllers\UserController as UserController;
+
+use application\controllers\AuthorizationController as AuthorizationController;
+
 class Router {
     private $routes;
 
@@ -23,11 +30,24 @@ class Router {
                 $actionName = array_shift($segments);
                 $controllerFile = ROOT."/application/controllers/$controllerName.php";
                 $parameters = $segments;
-                if (file_exists($controllerFile)) {
-                    include_once($controllerFile);
+//                if (file_exists($controllerFile)) {
+//                    include_once($controllerFile);
+//                }
+
+                switch ($controllerName) {
+                    case 'StorageController':
+                        $controllerObject = new StorageController();
+                        break;
+                    case 'UserController':
+                        $controllerObject = new UserController();
+                        break;
+                    case 'AuthorizationController':
+                        $controllerObject = new AuthorizationController();
+                        break;
                 }
 
-                $controllerObject = new $controllerName;
+//                $controllerObject = new $controllerName;
+
                 $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
                 if ($result) {
                     break;

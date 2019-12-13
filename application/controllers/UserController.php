@@ -1,6 +1,9 @@
 <?php
-include_once(ROOT.'/Session.php');
-include_once(ROOT.'/exceptions.php');
+namespace application\controllers;
+//include_once(ROOT.'/exceptions.php');
+use application\Session;
+use application\Session_start_exists;
+use application\Session_not_exists_delete;
 class UserController {
     public function logout() {
         try {

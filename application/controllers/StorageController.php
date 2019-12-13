@@ -1,7 +1,14 @@
 <?php
-include_once(ROOT.'/application/models/Storage.php');
-include_once(ROOT.'/Session.php');
-include_once(ROOT.'/exceptions.php');
+namespace application\controllers;
+//include_once(ROOT.'/application/models/Storage.php');
+//include_once(ROOT.'/Session.php');
+use application\Session;
+//include_once(ROOT.'/exceptions.php');
+use application\Session_start_exists;
+use application\Session_not_exists_get;
+use application\Product_id_not_exists;
+//include_once(ROOT.'/application/models/Storage.php');
+use application\models\Storage;
 class StorageController {
     public function get_products() {
         try {
@@ -14,7 +21,7 @@ class StorageController {
             try {
                 $products = Storage::get_products();
                 if (Session::contains('email')) $usr_email = Session::get('email');
-            } catch (Session_get_exists $e) {
+            } catch (Product_id_not_exists $e) {
                 $err = $e->getMessage();
             }
 
@@ -41,7 +48,7 @@ class StorageController {
             if (!$err) {
                 try {
                     $usr_email = Session::get('email');
-                } catch (Session_get_exists $e) {
+                } catch (Session_not_exists_get $e) {
                     $err = $e->getMessage();
                 }
             }

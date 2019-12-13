@@ -1,5 +1,7 @@
 <?php
-include_once(ROOT.'/exceptions.php');
+namespace application\models;
+//include_once(ROOT.'/exceptions.php');
+use application\Product_id_not_exists;
 class Storage {
     public static function get_products() {
         return include_once(ROOT.'/storage.php');

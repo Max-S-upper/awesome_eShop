@@ -1,13 +1,15 @@
 <?php
-include_once(ROOT.'/exceptions.php');
-include_once(ROOT.'/Session.php');
+namespace application\models;
+//include_once(ROOT.'/exceptions.php');
+use application\Session;
+use application\exceptions\AuthorizationException;
 class Authorization {
     public static function auth($email, $password) {
         if (!Session::sessionExists()) Session::start();
         if (Session::contains('email')) return true;
         else {
-            if (!self::is_email($email)) throw new Account_not_exists("Account with this email doesn't exist");
-            else if (!self::is_password($password)) throw new Wrong_password("Wrong password");
+            if (!self::is_email($email)) throw new AuthorizationException("Account with this email doesn't exist");
+            else if (!self::is_password($password)) throw new AuthorizationException("Wrong password");
             else {
                 Session::set('email', $email);
                 return true;
