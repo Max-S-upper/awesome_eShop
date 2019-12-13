@@ -1,10 +1,13 @@
 <?php
 namespace application\models;
-//include_once(ROOT.'/exceptions.php');
+
 use application\Session;
 use application\exceptions\AuthorizationException;
-class Authorization {
-    public static function auth($email, $password) {
+
+class Authorization
+{
+    public static function auth($email, $password)
+    {
         if (!Session::sessionExists()) Session::start();
         if (Session::contains('email')) return true;
         else {
@@ -17,21 +20,25 @@ class Authorization {
         }
     }
 
-    public static function is_email($email) {
+    public static function is_email($email)
+    {
         if ($email == self::get_email()) return true;
         else return false;
     }
 
-    public static function is_password($password) {
+    public static function is_password($password)
+    {
         if ($password == self::get_password()) return true;
         else return false;
     }
 
-    public static function get_email() {
+    public static function get_email()
+    {
         return 'm.s@gmail.com';
     }
 
-    public static function get_password() {
+    public static function get_password()
+    {
         return '123';
     }
 }
