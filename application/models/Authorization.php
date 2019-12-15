@@ -11,8 +11,8 @@ class Authorization
         if (!Session::sessionExists()) Session::start();
         if (Session::contains('email')) return true;
         else {
-            if (!self::is_email($email)) throw new AuthorizationException("Account with this email doesn't exist");
-            else if (!self::is_password($password)) throw new AuthorizationException("Wrong password");
+            if (!self::isEmail($email)) throw new AuthorizationException("Account with this email doesn't exist");
+            else if (!self::isPassword($password)) throw new AuthorizationException("Wrong password");
             else {
                 Session::set('email', $email);
                 return true;
@@ -20,24 +20,24 @@ class Authorization
         }
     }
 
-    public static function is_email($email)
+    public static function isEmail($email)
     {
-        if ($email == self::get_email()) return true;
+        if ($email == self::getEmail()) return true;
         else return false;
     }
 
-    public static function is_password($password)
+    public static function isPassword($password)
     {
-        if ($password == self::get_password()) return true;
+        if ($password == self::getPassword()) return true;
         else return false;
     }
 
-    public static function get_email()
+    public static function getEmail()
     {
         return 'm.s@gmail.com';
     }
 
-    public static function get_password()
+    public static function getPassword()
     {
         return '123';
     }

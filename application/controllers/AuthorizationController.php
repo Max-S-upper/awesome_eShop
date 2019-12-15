@@ -8,7 +8,7 @@ use application\exceptions\AuthorizationException;
 
 class AuthorizationController
 {
-    public function show_authorization_page()
+    public function showAuthorizationPage()
     {
         try {
             if (!Session::sessionExists()) Session::start();
@@ -23,20 +23,20 @@ class AuthorizationController
         include(ROOT.'/application/views/includes/footer.php');
     }
 
-    public function check_authorization()
+    public function checkAuthorization()
     {
         $usr_email = array_key_exists('email', $_POST) ? $_POST['email'] : '';
         $usr_password = array_key_exists('password', $_POST) ? $_POST['password'] : '';
 
         try {
-            if (Authorization::auth($usr_email, $usr_password)) self::show_welcome_page();
+            if (Authorization::auth($usr_email, $usr_password)) self::showWelcomePage();
         } catch (AuthorizationException $e) {
             Session::set('login_err', $e->getMessage());
             header("Location: /login");
         }
     }
 
-    public function show_welcome_page()
+    public function showWelcomePage()
     {
         if (!Session::sessionExists()) Session::start();
         $usr_email = Session::get('email');
