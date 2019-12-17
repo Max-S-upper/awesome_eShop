@@ -57,7 +57,7 @@ class Session
     public static function get($key)
     {
         if (self::sessionExists() && array_key_exists($key, $_SESSION)) return $_SESSION[$key];
-        else throw new SessionException("Error: Can't get session value. Session hasn't been started");
+        else if (!self::sessionExists()) throw new SessionException("Error: Can't get session value. Session hasn't been started");
     }
 
     public static function start()
