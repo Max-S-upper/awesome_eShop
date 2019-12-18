@@ -16,13 +16,16 @@ function err_handler($errstr, $errfile, $errline) {
     fclose($f);
 }
 
-// My first composer package for educational purposes
 //include 'vendor/autoload.php';
-//include 'vendor/max-s-upper/my_first_smile_package/app/MyFirstPackage.php';
-//use my_package\app\MyFirstPackage;
-//class testPackage extends MyFirstPackage {}
+//use my_package\app\LogsToTelegram;
+//use Monolog\Handler\StreamHandler;
+//use Monolog\Logger;
+//
+//class testPackage extends LogsToTelegram {}
 //$test1 = new testPackage('test1');
-//echo $test1->customGetProcessor();
+//$test1->info('This is a log! ^_^ ');
+//$test1->warning('This is a log warning! ^_^ ');
+//$test1->error('This is a log error! ^_^ ');
 
 
 spl_autoload_register(function ($className) {
