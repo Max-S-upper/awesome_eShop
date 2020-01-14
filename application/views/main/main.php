@@ -1,14 +1,23 @@
-<main>
-    <h1 class="products-header">Products:</h1>
+<main class="center-page">
     <section class="products">
         <?php
             foreach ($products as $product): ?>
-                <a href="http://eshop.com/show/<?= $product->id ?>" class="product">
-                    <img src="/public/images/<?= $product->picture ?>" alt="<?= $product->name ?>">
-                    <span class="name"><?= $product->name ?></span>
-                    <span class="quantity">Available:<?= $product->quantity ?></span>
+                <div class="product">
+                    <p class="brand">
+                        <a href="http://eshop.com/brand/<?= $product->brand_id ?>"><?= $product->brand ?></a>
+                    </p>
+                    <a href="http://eshop.com/show/<?= $product->id ?>">
+                        <img src="/public/images/<?= $product->image ?>" alt="<?= $product->title ?>">
+                    </a>
+                    <p class="name">
+                        <a href="http://eshop.com/show/<?= $product->id ?>"><?= $product->title ?></a>
+                    </p>
+                    <?php foreach($product->attributes as $attribute) : ?>
+                        <span class="attributes">Attributes: <?= $attribute->title ?></span>
+                    <?php endforeach; ?>
+                    <span class="quantity">Available: <?= $product->quantity ?></span>
                     <span class="price"><?= $product->price ?>₴</span>
-                </a>
+                </div>
             <?php endforeach; ?>
     </section>
 </main>

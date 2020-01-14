@@ -11,15 +11,14 @@
     <title>Awesome eShop</title>
 </head>
 <body>
-    <div class="wrapper">
-        <header class="main-header">
-            <nav>
-                <div>
-                    <a href="http://eshop.com/">Awesome eShop</a>
-                </div>
-                <div>
-                    <a href="login">Sign in</a>
-                    <a href="#">Sign up</a>
-                </div>
-            </nav>
-        </header>
+    <header class="main-header">
+        <nav>
+            <div>
+                <a href="http://eshop.com/">Awesome eShop</a>
+            </div>
+            <div>
+                <a href="http://eshop.com/login">Sign in</a>
+                <a href="http://eshop.com/signup">Sign up</a>
+            </div>
+        </nav>
+    </header>

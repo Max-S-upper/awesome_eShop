@@ -16,7 +16,7 @@ function err_handler($errstr, $errfile, $errline) {
     fclose($f);
 }
 
-//include 'vendor/autoload.php';
+include ROOT.'/vendor/autoload.php';
 //use my_package\app\LogsToTelegram;
 //use Monolog\Handler\StreamHandler;
 //use Monolog\Logger;
@@ -38,7 +38,10 @@ spl_autoload_register(function ($className) {
     }
 });
 
+use application\components\ActiveRecord;
 use application\components\Router;
 
 $routes = new Router();
 $routes->run();
+
+

@@ -1,6 +1,8 @@
 <?php
 namespace application\models;
 
+use application\exceptions\StorageException;
+
 class Storage
 {
     public static function getProductById($id)
@@ -8,7 +10,6 @@ class Storage
         $products = include(ROOT.'/storage.php');
         foreach ($products as $key => $product) {
             if ($product['id'] == $id) {
-                $product['name'] = $key;
                 return $product;
             }
         }

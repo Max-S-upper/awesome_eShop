@@ -1,0 +1,237 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema max_db
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema max_db
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `max_db` ;
+USE `max_db` ;
+
+-- -----------------------------------------------------
+-- Table `max_db`.`brands`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`brands` (
+  `id` INT(11) NOT NULL,
+  `title` VARCHAR(45) NOT NULL,
+  `image` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`categories` (
+  `id` INT(11) NOT NULL,
+  `title` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`subcategories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`subcategories` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`category_subcategories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`category_subcategories` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `category_id` INT(11) NOT NULL,
+  `subcategory_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_cs_category_id_idx` (`category_id` ASC),
+  INDEX `fk_cs_subcategory_id_idx` (`subcategory_id` ASC),
+  CONSTRAINT `fk_cs_category_id`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `max_db`.`categories` (`id`),
+  CONSTRAINT `fk_cs_subcategory_id`
+    FOREIGN KEY (`subcategory_id`)
+    REFERENCES `max_db`.`subcategories` (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`product_attributes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`product_attributes` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`products`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`products` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(360) NOT NULL,
+  `price` DECIMAL(11,2) NOT NULL,
+  `sale_price` TINYINT(1) NOT NULL,
+  `code` VARCHAR(45) NOT NULL,
+  `brand_id` INT(11) NOT NULL,
+  `is_sale` TINYINT(1) NOT NULL,
+  `image` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_brand_id_idx` (`brand_id` ASC),
+  CONSTRAINT `fk_p_brand_id`
+    FOREIGN KEY (`brand_id`)
+    REFERENCES `max_db`.`brands` (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`orders`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`orders` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `product_id` INT(11) NOT NULL,
+  `attribute_id` INT(11) NOT NULL,
+  `quantity` INT(11) NOT NULL,
+  `price` DECIMAL(11,2) NOT NULL,
+  `order_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_o_product_id_idx` (`product_id` ASC),
+  INDEX `fk_o_attribute_id_idx` (`attribute_id` ASC),
+  CONSTRAINT `fk_o_attribute_id`
+    FOREIGN KEY (`attribute_id`)
+    REFERENCES `max_db`.`product_attributes` (`id`),
+  CONSTRAINT `fk_o_product_id`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `max_db`.`products` (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`products_attributes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`products_attributes` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `product_id` INT(11) NOT NULL,
+  `attribute_id` INT(11) NOT NULL,
+  `quantity` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_pa_product_id_idx` (`product_id` ASC),
+  INDEX `fk_pa_attribute_id_idx` (`attribute_id` ASC),
+  CONSTRAINT `fk_pa_attribute_id`
+    FOREIGN KEY (`attribute_id`)
+    REFERENCES `max_db`.`product_attributes` (`id`),
+  CONSTRAINT `fk_pa_product_id`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `max_db`.`products` (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`products_categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`products_categories` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `product_id` INT(11) NOT NULL,
+  `category_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_product_id_idx` (`product_id` ASC),
+  INDEX `fk_category_id_idx` (`category_id` ASC),
+  CONSTRAINT `fk_pc_category_id`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `max_db`.`categories` (`id`),
+  CONSTRAINT `fk_pc_product_id`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `max_db`.`products` (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`products_subcategories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`products_subcategories` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `product_id` INT(11) NOT NULL,
+  `subcategory_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_product_id_idx` (`product_id` ASC),
+  INDEX `fk_subcategory_id_idx` (`subcategory_id` ASC),
+  CONSTRAINT `fk_ps_product_id`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `max_db`.`products` (`id`),
+  CONSTRAINT `fk_ps_subcategory_id`
+    FOREIGN KEY (`subcategory_id`)
+    REFERENCES `max_db`.`subcategories` (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`roles` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`users` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(90) NOT NULL,
+  `password` VARCHAR(180) NOT NULL,
+  `phone` VARCHAR(45) NULL DEFAULT NULL,
+  `role_id` INT(11) NOT NULL,
+  `is_blocked` TINYINT(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  INDEX `fk_role_id_idx` (`role_id` ASC),
+  CONSTRAINT `fk_u_role_id`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `max_db`.`roles` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `max_db`.`users_orders`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `max_db`.`users_orders` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `order_id` INT(11) NOT NULL,
+  `addres` VARCHAR(180) NOT NULL,
+  `note` VARCHAR(180) NOT NULL,
+  `price` DECIMAL(11,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_uo_user_id_idx` (`user_id` ASC),
+  INDEX `fk_uo_order_id_idx` (`order_id` ASC),
+  CONSTRAINT `fk_uo_order_id`
+    FOREIGN KEY (`order_id`)
+    REFERENCES `max_db`.`orders` (`id`),
+  CONSTRAINT `fk_uo_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `max_db`.`users` (`id`))
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

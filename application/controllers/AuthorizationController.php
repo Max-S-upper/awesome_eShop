@@ -5,6 +5,7 @@ use application\Session;
 use application\models\Authorization;
 use application\exceptions\SessionException;
 use application\exceptions\AuthorizationException;
+use application\models\User;
 
 class AuthorizationController
 {
@@ -25,11 +26,13 @@ class AuthorizationController
 
     public function checkAuthorization()
     {
-        $usr_email = array_key_exists('email', $_POST) ? $_POST['email'] : '';
-        $usr_password = array_key_exists('password', $_POST) ? $_POST['password'] : '';
+        $user_email = array_key_exists('email', $_POST) ? $_POST['email'] : '';
+        $user_password = array_key_exists('password', $_POST) ? $_POST['password'] : '';
 
         try {
-            if (Authorization::auth($usr_email, $usr_password)) self::showWelcomePage();
+//            if (Authorization::auth($usr_email, $usr_password)) self::showWelcomePage();
+            $userObject = new User();
+            $user = $userObject->checkUser($user_email, $user_password);
         } catch (AuthorizationException $e) {
             Session::set('login_err', $e->getMessage());
             header("Location: /login");
