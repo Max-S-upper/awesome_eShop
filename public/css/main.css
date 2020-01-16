@@ -162,6 +162,13 @@ main {
     color: rgba(0, 0, 0, .5);
 }
 
+.errors {
+    grid-column: 1/-1;
+    background: #efeded;
+    padding: 0 20px;
+    width: auto;
+}
+
 .product-alike {
     font-size: 14px;
     line-height: 20px;

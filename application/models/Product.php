@@ -2,6 +2,8 @@
 
 namespace application\models;
 
+use application\exceptions\SearchException;
+
 class Product  extends ActiveRecordEntity
 {
     public function getAll()
@@ -88,43 +90,33 @@ class Product  extends ActiveRecordEntity
     public function getByBrand($brand_id)
     {
         $products = array();
-        foreach ($this->db->connection->query("SELECT * FROM " . $this->getTableName() . " WHERE brand_id = $brand_id")->fetchAll() as $product) {
-            $brandObject = new Brand();
-            $brandTitle = $brandObject->getTitle($product['brand_id']);
-            $productAttributesObject = new ProductAttribute();
-            $productAttributes = $productAttributesObject->getAttributesIdByProductId($product['id']);
-            $attributeObject = new Attribute();
-            $attributes = array();
-            foreach ($productAttributes as $productAttribute) {
-                $attributes[] = $attributeObject->getTitle($productAttribute->attributeId);
+        $productsData = $this->db->connection->query("SELECT id FROM products WHERE brand_id = $brand_id")->fetchAll();
+        if ($productsData) {
+            foreach ($productsData as $productData) {
+                $products[] = $this->getById($productData['id']);
             }
 
-            $productObject = new self();
-            $productObject->id = $product['id'];
-            $productObject->title = $product['title'];
-            $productObject->description = $product['description'];
-            $productObject->sale_price = $product['sale_price'];
-            $productObject->code = $product['code'];
-            $productObject->brand_id = $product['brand_id'];
-            $productObject->is_sale = $product['is_sale'];
-            $productObject->image = $product['image'];
-            $productObject->brand = $brandTitle;
-            $productObject->price = $product['price'];
-            $productObject->quantity = $product['quantity'];
-            $productObject->attributes = $attributes;
-            $products[] = $productObject;
+            return $products;
         }
 
-        return $products;
+        else throw new SearchException('Products not found');
+
     }
 
+    public function getByTitle($title)
+    {
+        $products = array();
+        $productsData = $this->db->connection->query("SELECT id FROM products WHERE title like '%$title%'")->fetchAll();
+        if ($productsData) {
+            foreach ($productsData as $productData) {
+                $products[] = $this->getById($productData['id']);
+            }
 
-//    public function getTitleById($id)
-//    {
-//        $productObject = new self();
-//        $productObject->title = $this->db->connection->query("SELECT title FROM products WHERE id = $id")->fetchAll();
-//        return $productObject;
-//    }
+            return $products;
+        }
+
+        else throw new SearchException("No results for $title");
+    }
 
     public function getTableName()
     {
