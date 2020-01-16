@@ -27,8 +27,7 @@ $(document).ready(() => {
                 'password': $password
             },
             success: ($answer) => {
-                console.log($answer);
-                if ($answer) {
+                if ($answer !== 'ok') {
                     let $errorsContent = `<strong>Whoops! Something went wrong.</strong>
                                             <ul>
                                                 <li>${$answer}</li>
@@ -37,12 +36,15 @@ $(document).ready(() => {
                 }
 
                 else {
-                    $closeLogin;
                     // $('header').remove();
                     $('header').load('http://eshop.com/application/views/includes/header_signed.php', function() {
                         setTimeout($closeLogin, 100);
+                        $("header .email").text($email);
                     });
                 }
+            },
+            error: ($err) => {
+                console.log(`Error: ${$err}`);
             }
         });
     });
