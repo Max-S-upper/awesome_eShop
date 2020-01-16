@@ -1,7 +1,11 @@
 <main class="center-page">
     <section class="products">
-        <?php
-            foreach ($products as $product): ?>
+        <?php if ($err): ?>
+            <div class="errors emphasized-container">
+                <p><?= $err ?></p>
+            </div>
+        <?php endif; ?>
+        <?php foreach ($products as $product): ?>
                 <div class="product">
                     <p class="brand">
                         <a href="http://eshop.com/brand/<?= $product->brand_id ?>"><?= $product->brand ?></a>
