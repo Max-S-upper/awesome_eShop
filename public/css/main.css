@@ -26,7 +26,8 @@ main {
     color: #34C678;
 }
 
-.login {
+.login,
+.signUp {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,7 +54,8 @@ main {
     color: #000;
 }
 
-.login form {
+.login form,
+.signUp form{
     display: flex;
     flex-direction: column;
     width: 300px;
@@ -66,20 +68,26 @@ main {
     cursor: pointer;
 }
 
-.login .errors-container {
+.login .errors-container,
+.signUp .errors-container {
     margin-bottom: 1rem;
 }
 
-.login .errors-container strong {
+.login .errors-container strong,
+.signUp .errors-container strong{
     color: #742a2a;
 }
 
-.login .errors-container li {
+.login .errors-container li,
+.signUp .errors-container li {
     color: #9b2c2c;
     font-size: .875rem;
 }
 
-.wrapper,
+.wrapper {
+    grid-template-rows: 40px auto 1fr 40px;
+}
+
 .wrapper-product{
     min-height: 92vh;
     display: grid;
@@ -241,12 +249,19 @@ form.search input[name=search]:hover {
     outline: none;
 }
 
-.login input[type="email"],
-.login input[type="password"]{
+.login input,
+.signUp input {
     padding: 7px;
 }
 
-.login .emphasized-container {
+.login .emphasized-container > label,
+.signUp .emphasized-container > label {
+    display: block;
+    margin-top: 1em;
+}
+
+.login .emphasized-container,
+.signUp .emphasized-container{
     width: 24rem;
     padding: 30px 20px;
     border-radius: 8px;
@@ -404,8 +419,46 @@ textarea[name=comment]:focus {
     margin-top: 4em;
 }
 
-.password-container {
-    margin-top: 1em;
+.login-container {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.8);
+    transition: .5s;
+}
+
+.login-container .login {
+    width: 100%;
+    height: 100%;
+}
+
+.login-container h1 {
+    text-align: center;
+    margin: 0;
+    margin-bottom: .7em;
+}
+
+.close-login-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-login {
+    font-size: 19px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.transparent {
+    opacity: 0;
 }
 
 @media screen and (max-width: 1200px) {

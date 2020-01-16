@@ -19,7 +19,7 @@ class AuthorizationController
             $err = $e->getMessage();
         }
 
-        include(ROOT.'/application/views/includes/header.php');
+        include(ROOT . '/application/views/includes/head.php');
         include(ROOT.'/application/views/main/login.php');
         include(ROOT.'/application/views/includes/footer.php');
     }
@@ -29,14 +29,32 @@ class AuthorizationController
         $user_email = array_key_exists('email', $_POST) ? $_POST['email'] : '';
         $user_password = array_key_exists('password', $_POST) ? $_POST['password'] : '';
 
-        try {
-//            if (Authorization::auth($usr_email, $usr_password)) self::showWelcomePage();
-            $userObject = new User();
-            $user = $userObject->checkUser($user_email, $user_password);
-        } catch (AuthorizationException $e) {
-            Session::set('login_err', $e->getMessage());
-            header("Location: /login");
+        $user = new User();
+        $stmt = $user->emailExists($user_email);
+        if ($stmt) {
+            $userData = $stmt->fetchAll();
+            if ($user->isPassword($userData[0]['password'], $user_password)) {
+                if (!Session::sessionExists()) Session::start();
+                Session::set('email', $user_email);
+                $user->id = $userData['id'];
+                $user->email = $user_email;
+                return 'ok';
+            }
+
+            else return 'Wrong password';
         }
+
+        else return "Account with this email doesn't exist";
+
+
+
+//        try {
+//            $userObject = new User();
+//            $user = $userObject->checkUser($user_email, $user_password);
+//            return 'ok';
+//        } catch (AuthorizationException $e) {
+//            return $e->getMessage();
+//        }
     }
 
     public function showWelcomePage()

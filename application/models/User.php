@@ -4,31 +4,46 @@
 namespace application\models;
 
 use application\exceptions\AuthorizationException;
+use application\exceptions\RegistrationException;
 use application\Session;
 
 class User extends ActiveRecordEntity
 {
-    public function checkUser($email, $password)
+    public $id;
+    public $name;
+    public $surname;
+    public $email;
+    public $password;
+    public $phone;
+    public $roleId;
+    public $isBlocked;
+
+    public function emailExists($email)
     {
-        $stmt = $this->db->connection->query("SELECT password FROM users WHERE email = $email");
-        if ($stmt) {
-            $userPassword = $stmt->fetchColumn();
-            if ($this->isPassword($userPassword, $password)) {
-                Session::set('email', $email);
-                $user = new self();
-                $user->email = $email;
-                return $user;
-            }
-
-            else throw new AuthorizationException("Wrong password");
-        }
-
-        else throw new AuthorizationException("Account with this email doesn't exist");
+        return $this->db->connection->query("SELECT id, password FROM users WHERE email = '$email'");
     }
+
 
     public function isPassword($userPassword, $password)
     {
-        return password_verify($userPassword, $password);
+        return password_verify($password, $userPassword);
+    }
+
+    public function save()
+    {
+        if ($this->id) {
+            if ($this->name) $this->db->connection->query("UPDATE users SET name = {$this->name} WHERE id = {$this->id}");
+            if ($this->surname) $this->db->connection->query("UPDATE users SET surname = {$this->surname} WHERE id = {$this->id}");
+            if ($this->email) $this->db->connection->query("UPDATE users SET email = {$this->email} WHERE id = {$this->id}");
+            if ($this->phone) $this->db->connection->query("UPDATE users SET phone = {$this->phone} WHERE id = {$this->id}");
+            if ($this->roleId) $this->db->connection->query("UPDATE users SET role_id = {$this->roleId} WHERE id = {$this->id}");
+            if ($this->isBlocked) $this->db->connection->query("UPDATE users SET isBlocked = {$this->isBlocked} WHERE id = {$this->id}");
+        }
+
+        else {
+            if ($this->emailExists($this->email)) throw new RegistrationException("Account with this email already exists");
+            else $querySent = $this->db->connection->query("INSERT INTO users(name, surname, email, password, phone, role_id, is_blocked) VALUES('{$this->name}', '{$this->surname}', '{$this->email}', '{$this->password}', '{$this->phone}', {$this->roleId}, {$this->isBlocked})");
+        }
     }
 
     public function getTableName()
