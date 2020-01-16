@@ -16,6 +16,10 @@ footer p {
     color: #fff;
 }
 
+.pushLogin {
+    cursor: pointer;
+}
+
 .main-header nav {
     display: flex;
     height: 100%;

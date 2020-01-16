@@ -6,7 +6,10 @@
         "monolog/monolog": "^2.0",
         "phpunit/phpunit": "^8.5",
         "max-s-upper/my_first_smile_package": "dev-master",
-        "too-easy/fir": "dev-master"
+        "too-easy/fir": "dev-master",
+        "swiftmailer/swiftmailer": "^6.0",
+        "max-s-upper/log_to_telegram": "^2.0",
+        "max-s-upper/transfer_creator": "^1.0"
     },
     "authors": [
         {
