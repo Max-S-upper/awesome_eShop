@@ -39,11 +39,38 @@ footer p {
     margin-right: 9vw;
 }
 
-.main-header nav > div:nth-child(2) a:first-child::after {
+.main-header nav > div:nth-child(2) a:first-child::after,
+.right-navigation > a:nth-child(2)::after {
     content: '|';
     color: #b0b0b0;
     margin-left: 10px;
     margin-right: -15px;
+}
+
+.right-navigation > div {
+    display: inline-block;
+}
+
+.right-navigation {
+    margin-right: 2em;
+}
+
+.cart-quantity-active {
+    padding: 3px;
+}
+
+.pushCart {
+    vertical-align: middle;
+    width: 35px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.cart-quantity {
+    color: #fff;
+    vertical-align: bottom;
+    background-color: orange;
+    border-radius: 35%;
 }
 
 @media screen and (max-width: 660px) {

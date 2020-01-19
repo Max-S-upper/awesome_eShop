@@ -87,6 +87,16 @@ class Product  extends ActiveRecordEntity
         return $productObject;
     }
 
+    public function getByIds($ids)
+    {
+        $products = array();
+        foreach ($ids as $id) {
+            $products[] = $this->getById($id);
+        }
+
+        return $products;
+    }
+
     public function getByBrand($brand_id)
     {
         $products = array();

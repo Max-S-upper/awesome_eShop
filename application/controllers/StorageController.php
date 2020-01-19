@@ -31,6 +31,14 @@ class StorageController
         }
     }
 
+    public function getProductsByIds()
+    {
+        $ids = $_POST['productsIds'];
+        $product = new Product();
+        $products = $product->getByIds($ids);
+        echo json_encode($products);
+    }
+
     public function getProductById($id)
     {
         try {
