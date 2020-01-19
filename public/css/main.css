@@ -145,7 +145,7 @@ main {
     z-index: 2;
 }
 
-.product img {
+.product a img {
     width: 290.5px;
     height: 305px;
     object-fit: contain;
@@ -276,6 +276,8 @@ form.search input[name=search]:hover {
 }
 
 .brand {
+    display: flex;
+    justify-content: space-between;
     width: 87%;
 }
 
@@ -426,7 +428,8 @@ textarea[name=comment]:focus {
     margin-top: 4em;
 }
 
-.login-container {
+.login-container,
+.cart-container{
     display: flex;
     position: fixed;
     top: 0;
@@ -439,7 +442,17 @@ textarea[name=comment]:focus {
     transition: .5s;
 }
 
-.login-container .login {
+.cart-container .price {
+    display: flex;
+    flex-direction: column;
+}
+
+.remove span {
+    cursor: pointer;
+}
+
+.login-container .login,
+.cart-container .cart {
     width: 100%;
     height: 100%;
 }
@@ -466,6 +479,26 @@ textarea[name=comment]:focus {
 
 .transparent {
     opacity: 0;
+}
+
+.add-to-cart {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+}
+
+.product-item .picture img {
+    width: 83px;
+}
+
+.product-item div {
+    margin: 0 .3em;
 }
 
 @media screen and (max-width: 1200px) {
