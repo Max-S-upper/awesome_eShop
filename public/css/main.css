@@ -239,7 +239,9 @@ form.search input[name=search]:hover {
 }
 
 .email-container input,
-.password-container input{
+.password-container input,
+.name-container input,
+.surname-container input {
     margin-top: .25rem;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -426,6 +428,39 @@ textarea[name=comment]:focus {
 
 .comments-container {
     margin-top: 4em;
+}
+
+.close-cart-container {
+    text-align: right;
+}
+
+.close-cart {
+    cursor: pointer;
+}
+
+.actions-container {
+    display: flex;
+    align-items: center;
+}
+
+.quantity span {
+    font-size: .8rem;
+    color: #4f4f4f;
+    line-height: 1.2em;
+}
+
+input.quantity-data {
+    width: 45px;
+    height: 25px;
+    text-align: center;
+}
+
+.add-to-cart-btn {
+    height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 3.4em;
 }
 
 .login-container,
