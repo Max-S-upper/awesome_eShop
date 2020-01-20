@@ -31,6 +31,10 @@ class RegistrationController
     public function createCustomer()
     {
         try {
+            $email = $_POST['email'];
+            $userController = new UserController();
+            $userController->emailExists($email);
+
             $_POST['surname'] ? $userSurname =  $_POST['surname'] : $userSurname =  '';
             $_POST['email'] ? $userEmail =  $_POST['email'] : $userEmail =  '';
             $_POST['name'] ? $userName =  $_POST['name'] : $userName =  '';
