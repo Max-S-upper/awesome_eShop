@@ -1,4 +1,27 @@
 $(document).ready(() => {
+    $(".submit-container input[name=signUp]").click((e) => {
+        e.preventDefault();
+        let $err = [];
+        if (!$(".name-container input").val()) $err.push("Please, enter your name.");
+        if (!$(".surname-container input").val()) $err.push("Please, enter your surname.");
+        if (!$(".email-container input").val()) $err.push("Please, enter your email.");
+        if (!$(".password-container input[name=password]").val()) $err.push("Please, enter your password.");
+        if (!$(".password-container input[name=confirm-password]").val()) $err.push("Please, confirm your password.");
+        else if ($(".password-container input[name=confirm-password]").val() !== $(".password-container input[name=password]").val()) $err.push("Passwords don't much.");
+        $(".errors-container").remove();
+        let $errBlockHtml = `<div class="errors-container">
+                            <strong>Whoops! Something went wrong.</strong>
+                            <ul>`;
+        $($err).each(($i, $singleErrorData) => {
+            $errBlockHtml += '<li>' + $singleErrorData + '</li>';
+        });
+
+        $errBlockHtml += `</ul>
+                        </div>`;
+        if (!$err[0]) $(".signUp form").submit();
+        else $(".signUp form").prepend($errBlockHtml);
+    });
+
     $(".pushLogin").click(() => {
         let $loginContainer = $(".login-container");
         $appearContainer($loginContainer);

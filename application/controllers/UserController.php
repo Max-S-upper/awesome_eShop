@@ -1,6 +1,8 @@
 <?php
 namespace application\controllers;
 
+use application\exceptions\RegistrationException;
+use application\models\User;
 use application\Session;
 use application\exceptions\SessionException;
 
@@ -24,5 +26,11 @@ class UserController
 
             if (!$err) header('Location: /');
         }
+    }
+
+    public function emailExists($email)
+    {
+        $user = new User();
+        if ($user->emailExists($email)) throw new RegistrationException('Account with this email already exists');
     }
 }
