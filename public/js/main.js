@@ -1,20 +1,23 @@
 $(document).ready(() => {
     $(".pushLogin").click(() => {
         let $loginContainer = $(".login-container");
-        $loginContainer.removeClass('hidden');
-        setTimeout(() => $loginContainer.removeClass('transparent'), 100);
+        $appearContainer($loginContainer);
     });
 
-    let $closeLogin = () => {
-        let $loginContainer = $(".login-container");
-        $loginContainer.addClass('transparent');
-        $loginContainer.on('transitionend webkitTransitionEnd oTransitionEnd', () => {
-            $loginContainer.addClass('hidden');
-            $loginContainer.off('transitionend webkitTransitionEnd oTransitionEnd');
-        });
-    }
+    let $appearContainer = ($container) => {
+        $container.removeClass('hidden');
+        setTimeout(() => $container.removeClass('transparent'), 100);
+    };
 
-    $(".close-login").click($closeLogin);
+    let $disappearContainer = ($container) => {
+        $container.addClass('transparent');
+        $container.on('transitionend webkitTransitionEnd oTransitionEnd', () => {
+            $container.addClass('hidden');
+            $container.off('transitionend webkitTransitionEnd oTransitionEnd');
+        });
+    };
+
+    $(".close-login").click(() => $disappearContainer($(".login-container")));
 
     $(".login-submit").click(() => {
         let $email = $(".email-container input").val();
@@ -37,9 +40,13 @@ $(document).ready(() => {
 
                 else {
                     // $('header').remove();
+                    let $cartCount = $(".cart-quantity").text();
                     $('header').load('http://eshop.com/application/views/includes/header_signed.php', function() {
-                        setTimeout($closeLogin, 100);
+                        setTimeout(() => $disappearContainer($(".login-container")), 100);
+                        $(".cart-quantity").text($cartCount);
+                        if ($cartCount) $(".cart-quantity").addClass('cart-quantity-active');
                         $("header .email").text($email);
+                        $(".pushCart").click($showCartProducts);
                     });
                 }
             },
@@ -55,7 +62,7 @@ $(document).ready(() => {
         $cartQuantityBlock.addClass("cart-quantity-active");
     }
 
-    $(".add-to-cart").click(function(e) {
+    let $addToCart = function(e) {
         let $cartQuantityBlock = $(".cart-quantity");
         let $quantity = $cartQuantityBlock.text() ? $cartQuantityBlock.text() : 0;
         let $cart = JSON.parse(localStorage.getItem('cart'));
@@ -68,6 +75,7 @@ $(document).ready(() => {
 
             $cartQuantityBlock.text($quantity);
         };
+
         if ($cart) {
             let $isProductInCart = false;
             $($cart).each(($i, $cartItem) => {
@@ -90,9 +98,27 @@ $(document).ready(() => {
         }
 
         localStorage.setItem('cart', JSON.stringify($cart));
-    });
+    };
 
-    $(".pushCart").click(() => {
+    $(".add-to-cart").click($addToCart);
+    $(".add-to-cart-btn").click($addToCart);
+
+    let $removeCartItems = function(e) {
+        let $cart = JSON.parse(localStorage.getItem('cart'));
+        let $removeId = $(e.target).attr('data-product-item-id');
+        let $cartQuantityBlock = $(".cart-quantity");
+        let $quantity = $cartQuantityBlock.text() ? $cartQuantityBlock.text() : 0;
+        $cart = $.grep($cart, ($cartItem) => {
+            return $cartItem['id'] != $removeId;
+        });
+
+        $(".product-item[data-product-item-id=" + $removeId + "]").remove();
+        $quantity--;
+        $cartQuantityBlock.text($quantity);
+        localStorage.setItem('cart', JSON.stringify($cart));
+    };
+
+    let $showCartProducts = () => {
         let $cart = JSON.parse(localStorage.getItem('cart'));
         let $productsIds = [];
         $($cart).each(($i, $product) => {
@@ -106,19 +132,22 @@ $(document).ready(() => {
                 'productsIds': $productsIds
             },
             success: ($productsDataJson) => {
-                let $cartPopUpContainer = `<div class="cart-container"></div>`;
+                let $cartPopUpContainer = `<div class="cart-container hidden transparent"></div>`;
                 let $productItems = `<div class="cart">
                                         <div class="emphasized-container">
+                                            <div class="close-cart-container"><span class="close-cart">x</span></div>
                                             <h1>Cart:</h1>`;
-                // console.log($productsData);
                 let $productsData = JSON.parse($productsDataJson);
-                console.log($cart);
+                if (!$productsData[0]) {
+                    $productItems += '<p>Empty</p>';
+                }
+
                 $($productsData).each(($i, $productItem) => {
                     let $quantity;
                     $($cart).each(($i, $productLocalStorageData) => {
-                            if ($productLocalStorageData['id'] === $productItem['id']) {
-                                $quantity = $productLocalStorageData['quantity'];
-                            }
+                        if ($productLocalStorageData['id'] === $productItem['id']) {
+                            $quantity = $productLocalStorageData['quantity'];
+                        }
                     });
 
                     $productItems += `<div class="product-item" data-product-item-id="${$productItem['id']}">
@@ -131,8 +160,11 @@ $(document).ready(() => {
                                                 <a href="http://eshop.com/show/${$productItem['id']}">${$productItem['title']}</a>
                                             </div>
                                             <div class="price">
-                                                <span>${$productItem['price']}$</span>
-                                                <span>Quantity: ${$quantity}</span>
+                                                <span class="price-data" data-signle-item-price="${$productItem['price']}">${parseInt($productItem['price']) * parseInt($quantity)}$</span>
+                                                <p class="quantity">
+                                                    <span>Quantity:</span>
+                                                    <input type="number" min="1" max="${$productItem['quantity']}" class="quantity-data" data-product-item-id="${$productItem['id']}" value="${$quantity}">
+                                                </p>
                                             </div>
                                             <div class="remove">
                                                 <span data-product-item-id="${$productItem['id']}">x</span>
@@ -143,18 +175,38 @@ $(document).ready(() => {
                 $productItems += `</div>
                                     </div>`;
                 $(".search").after($cartPopUpContainer);
-                $(".cart-container").html($productItems);
-                $(".cart-container .remove span").click(function(e) {
+                let $cartContainer = $(".cart-container");
+                $cartContainer.html($productItems);
+                $appearContainer($cartContainer);
+                $(".close-cart").click(() => $disappearContainer($cartContainer));
+                $(".cart-container .remove span").click($removeCartItems);
+                $(".quantity-data").on('change', (e) => {
                     let $cart = JSON.parse(localStorage.getItem('cart'));
-                    let $removeId = $(e.target).attr('data-product-item-id');
-                    $cart = $.grep($cart, ($cartItem) => {
-                        return $cartItem['id'] != $removeId;
-                    });
+                    let $id = $(e.target).attr('data-product-item-id');
+                    let $priceDataBlock = $(".product-item[data-product-item-id=" + $id + "] .price-data");
+                    let $price = $priceDataBlock.attr('data-signle-item-price');
+                    let $maxQuantity = parseInt($(e.currentTarget).attr('max'));
+                    let $minQuantity = parseInt($(e.currentTarget).attr('min'));
+                    let $currentQuantity = parseInt($(e.currentTarget).val());
+                    if ($maxQuantity < $currentQuantity) {
+                        $(e.currentTarget).val($maxQuantity);
+                    }
 
-                    $(".product-item[data-product-item-id=" + $removeId + "]").remove();
+                    else if ($minQuantity > $(e.currentTarget).val()) {
+                        $(e.currentTarget).val($minQuantity);
+                    }
+
+                    $($cart).each(($i, $productLocalStorageData) => {
+                        if ($productLocalStorageData['id'] === $id) {
+                            $productLocalStorageData['quantity'] = $(e.currentTarget).val();
+                        }
+                    });
+                    $priceDataBlock.text((parseInt($(e.currentTarget).val()) * parseInt($price)) + "$");
                     localStorage.setItem('cart', JSON.stringify($cart));
                 });
             }
         });
-    });
+    };
+
+    $(".pushCart").click($showCartProducts);
 });

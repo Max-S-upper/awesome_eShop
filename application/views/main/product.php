@@ -28,7 +28,10 @@
                         <a href="<?= 'http://eshop.com/show/'.$productAlike['id'] ?>" class="product-alike"> <?= $productAlike['title'] ?>,</a>
                     <?php endforeach; ?>
                 </p>
-                <input type="submit" name="buy" value="Buy">
+                <div class="actions-container">
+                    <input type="submit" name="buy" value="Buy">
+                    <p class="button-primary add-to-cart-btn" data-product-id="<?= $product->id ?>">Add to cart</p>
+                </div>
             </div>
         </form>
         <div class="comments-container">
