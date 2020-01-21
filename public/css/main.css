@@ -269,6 +269,10 @@ form.search input[name=search]:hover {
     margin-top: 1em;
 }
 
+.total-amount span {
+    font-size: 2rem;
+}
+
 .login .emphasized-container,
 .signUp .emphasized-container{
     width: 24rem;
