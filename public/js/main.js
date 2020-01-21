@@ -165,6 +165,8 @@ $(document).ready(() => {
                     $productItems += '<p>Empty</p>';
                 }
 
+                let $totalAmount = 0;
+
                 $($productsData).each(($i, $productItem) => {
                     let $quantity;
                     $($cart).each(($i, $productLocalStorageData) => {
@@ -173,6 +175,8 @@ $(document).ready(() => {
                         }
                     });
 
+                    let $price = parseInt($productItem['price']) * parseInt($quantity);
+                    $totalAmount += $price;
                     $productItems += `<div class="product-item" data-product-item-id="${$productItem['id']}">
                                             <div class="picture">
                                                 <a href="http://eshop.com/show/${$productItem['id']}">
@@ -183,7 +187,7 @@ $(document).ready(() => {
                                                 <a href="http://eshop.com/show/${$productItem['id']}">${$productItem['title']}</a>
                                             </div>
                                             <div class="price">
-                                                <span class="price-data" data-signle-item-price="${$productItem['price']}">${parseInt($productItem['price']) * parseInt($quantity)}$</span>
+                                                <span class="price-data" data-signle-item-price="${$productItem['price']}">${$price}₴</span>
                                                 <p class="quantity">
                                                     <span>Quantity:</span>
                                                     <input type="number" min="1" max="${$productItem['quantity']}" class="quantity-data" data-product-item-id="${$productItem['id']}" value="${$quantity}">
@@ -195,7 +199,11 @@ $(document).ready(() => {
                                         </div>`;
                 });
 
-                $productItems += `</div>
+                $productItems += `        <div class="total-amount">
+                                                    <span>Total amout: </span>
+                                                    <span class="total-amout-data">${$totalAmount}₴</span>
+                                            </div>
+                                        </div>
                                     </div>`;
                 $(".search").after($cartPopUpContainer);
                 let $cartContainer = $(".cart-container");
@@ -211,6 +219,7 @@ $(document).ready(() => {
                     let $maxQuantity = parseInt($(e.currentTarget).attr('max'));
                     let $minQuantity = parseInt($(e.currentTarget).attr('min'));
                     let $currentQuantity = parseInt($(e.currentTarget).val());
+                    let $previousPrice = parseInt($priceDataBlock.text());
                     if ($maxQuantity < $currentQuantity) {
                         $(e.currentTarget).val($maxQuantity);
                     }
@@ -224,7 +233,10 @@ $(document).ready(() => {
                             $productLocalStorageData['quantity'] = $(e.currentTarget).val();
                         }
                     });
-                    $priceDataBlock.text((parseInt($(e.currentTarget).val()) * parseInt($price)) + "$");
+
+                    let $currentProductPrice = parseInt($(e.currentTarget).val()) * parseInt($price);
+                    $(".total-amout-data").text((parseInt($(".total-amout-data").text()) - $previousPrice) + $currentProductPrice + "₴");
+                    $priceDataBlock.text($currentProductPrice + "₴");
                     localStorage.setItem('cart', JSON.stringify($cart));
                 });
             }
