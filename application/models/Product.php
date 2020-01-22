@@ -97,10 +97,10 @@ class Product  extends ActiveRecordEntity
         return $products;
     }
 
-    public function getByBrand($brand_id)
+    public function getByBrand($brandId)
     {
         $products = array();
-        $productsData = $this->db->connection->query("SELECT id FROM products WHERE brand_id = $brand_id")->fetchAll();
+        $productsData = $this->db->connection->query("SELECT id FROM products WHERE brand_id = $brandId")->fetchAll();
         if ($productsData) {
             foreach ($productsData as $productData) {
                 $products[] = $this->getById($productData['id']);
@@ -110,7 +110,36 @@ class Product  extends ActiveRecordEntity
         }
 
         else throw new SearchException('Products not found');
+    }
 
+    public function getByCategory($categoryId)
+    {
+        $products = array();
+        $productsData = $this->db->connection->query("SELECT id FROM products WHERE category_id = $categoryId")->fetchAll();
+        if ($productsData) {
+            foreach ($productsData as $productData) {
+                $products[] = $this->getById($productData['id']);
+            }
+
+            return $products;
+        }
+
+        else throw new SearchException('No products in this category');
+    }
+
+    public function getBySubCategory($subCategoryId)
+    {
+        $products = array();
+        $productsData = $this->db->connection->query("SELECT id FROM products WHERE subcategory_id = $subCategoryId")->fetchAll();
+        if ($productsData) {
+            foreach ($productsData as $productData) {
+                $products[] = $this->getById($productData['id']);
+            }
+
+            return $products;
+        }
+
+        else throw new SearchException('No products in this subcategory');
     }
 
     public function getByTitle($title)
