@@ -281,6 +281,28 @@ form.search input[name=search]:hover {
     margin-top: 10px;
 }
 
+.category,
+.sub-category {
+    color: #000;
+    text-decoration: none;
+    transition: .5s;
+}
+
+.categories .category {
+    font-size: 27px;
+}
+
+.categories .sub-category {
+    margin-top: .5em;
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+.category:hover,
+.sub-category:hover {
+    color: rgba(0, 0, 0, .7);
+}
+
 .brand {
     display: flex;
     justify-content: space-between;
@@ -348,6 +370,16 @@ input[name=buy]:hover {
 input[name=buy]:focus {
     box-shadow: none;
     border: solid 1px #3489c6;
+}
+
+.categories {
+    margin-top: 1.5em;
+    display: flex;
+    justify-content: center;
+}
+
+.category-container {
+    margin-right: 5em;
 }
 
 .rating-star {
