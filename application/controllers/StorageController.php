@@ -2,9 +2,8 @@
 namespace application\controllers;
 
 use application\components\Categories;
+use application\components\Filters;
 use application\exceptions\SearchException;
-use application\models\Category;
-use application\models\Subcategory;
 use application\Session;
 use application\exceptions\SessionException;
 use application\models\Product;
@@ -125,6 +124,8 @@ class StorageController
             $productObject = new Product();
             $categoryHelper = new Categories();
             $categories = $categoryHelper->getAll();
+            $filterHelper = new Filters();
+            $filters = $filterHelper->getBySubCategory($subCategoryId);
             try {
                 $products = $productObject->getBySubCategory($subCategoryId);
             } catch (SearchException $e) {
