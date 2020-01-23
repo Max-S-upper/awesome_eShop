@@ -238,6 +238,10 @@ form.search input[name=search]:hover {
     color: #4a5568;
 }
 
+.brand a:hover {
+    color: #000;
+}
+
 .email-container input,
 .password-container input,
 .name-container input,
@@ -312,6 +316,7 @@ form.search input[name=search]:hover {
 .brand a {
     text-decoration: none;
     color: rgba(0, 0, 0, .7);
+    transition: .5s;
 }
 
 .product-container {
@@ -570,6 +575,38 @@ input.quantity-data {
 
 .product-item div {
     margin: 0 .3em;
+}
+
+.filters-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.7em;
+}
+
+.filter {
+    margin: 7px 0;
+}
+
+.filter label {
+    display: block;
+    cursor: pointer;
+    padding: 5px;
+    transition: .2s;
+}
+
+.filter:hover label {
+    background: #ececec;
+}
+
+.filter input:checked + label {
+    background: #ffd700;
+}
+
+.filters-block {
+    background: #f3f3f3;
+    padding: 15px 25px;
+    border-radius: 3px;
+    margin-right: 1em;
 }
 
 @media screen and (max-width: 1200px) {

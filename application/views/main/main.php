@@ -1,5 +1,6 @@
 <main class="center-page">
     <?= $categories ?>
+    <?= $filters ?>
     <section class="products">
         <?php if ($err): ?>
             <div class="errors emphasized-container">

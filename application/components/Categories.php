@@ -21,7 +21,8 @@ class Categories
 
     public function getAll()
     {
-        $categoriesData = $this->db->connection->query("select categories.*, subcategories.id, subcategories.title from categories left join subcategories on subcategories.category_id = categories.id order by categories.id")->fetchAll();
+        $categoriesData = $this->db->connection->query("SELECT categories.*, subcategories.id, subcategories.title 
+            FROM categories LEFT JOIN subcategories ON subcategories.category_id = categories.id ORDER BY categories.id")->fetchAll();
         $categories = array();
         foreach ($categoriesData as $categoryData) {
             $category = new self();
