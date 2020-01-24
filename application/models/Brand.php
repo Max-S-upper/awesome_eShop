@@ -5,9 +5,16 @@ namespace application\models;
 
 class Brand extends ActiveRecordEntity
 {
+    public $title;
+
     public function getTitle($id)
     {
-        return $this->db->connection->query("SELECT title FROM brands WHERE id = $id")->fetchColumn();
+        if (!$this->title) {
+            $brandTitle = $this->db->connection->query("SELECT title FROM brands WHERE id = $id")->fetchColumn();
+            $this->title = $brandTitle;
+        }
+
+        return $this->title;
     }
 
     public function getTableName()

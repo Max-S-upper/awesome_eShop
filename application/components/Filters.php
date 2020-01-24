@@ -19,7 +19,7 @@ class Filters
             FROM filter_block_attributes LEFT JOIN filter_blocks ON filter_blocks.id = filter_block_attributes.filter_block_id 
             WHERE filter_blocks.sub_category_id = $subCategoryId")->fetchAll();
 
-        $attributesQuery = "SELECT title FROM attributes WHERE id = ";
+        $attributesQuery = "SELECT id, title FROM attributes WHERE id = ";
         $counter = 0;
         foreach ($filterBlockAttributeIds as $filterBlockAttributeId) {
             if ($counter) $attributesQuery .= " OR id = {$filterBlockAttributeId['attribute_id']}";
@@ -27,7 +27,10 @@ class Filters
             $counter++;
         }
 
-        $filterAttributeTitles = $this->db->connection->query($attributesQuery)->fetchAll();
+        $stmt = $this->db->connection->query($attributesQuery);
+        if ($stmt) $filterAttributesData= $stmt->fetchAll();
+        else return '';
+
         $filterBlockIds = array();
         foreach ($filterBlockAttributeIds as $filterBlockAttributeId) {
             $filterBlockIds[] = $filterBlockAttributeId['filter_block_id'];
@@ -58,8 +61,8 @@ class Filters
             for ($i = 0; $i < count($filterBlockAttributeIds); $i++) {
                 if ($filterBlockId === $filterBlockAttributeIds[$i]['filter_block_id']) {
                     $filtersData[$filterBlockId]['filterBlockData']['attributesData'][] = [
-                        'id' => $filterBlockAttributeIds[$i]['attribute_id'],
-                        'title' => $filterAttributeTitles[$i]['title']
+                        'id' => $filterAttributesData[$i]['id'],
+                        'title' => $filterAttributesData[$i]['title']
                     ];
                 }
             }
@@ -67,7 +70,7 @@ class Filters
             $counter++;
         }
 
-        $filtersHtml = "<div class='filters-container'>";
+        $filtersHtml = "<div class='filters-container' data-subcategory-id='$subCategoryId'>";
         foreach ($filtersData as $filterData) {
             $filtersHtml .= "<div class='filters-block'>
                                 <p>{$filterData['filterBlockData']['title']}:</p>";

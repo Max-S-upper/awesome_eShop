@@ -36,7 +36,7 @@ class StorageController
     {
         $ids = $_POST['productsIds'];
         $product = new Product();
-        $products = $product->getByIds($ids);
+        $products = $product->getById($ids);
         echo json_encode($products);
     }
 
@@ -144,6 +144,17 @@ class StorageController
         } catch (SessionException $e) {
             echo $e->getMessage();
         }
+    }
+
+    public function getProductsByFilters()
+    {
+        $attributeIds = $_POST['attributeIds'];
+        $subCategoryId = $_POST['subCategoryId'];
+        $product = new Product();
+        $products = $product->getByAttributeAndSubCategory($attributeIds, $subCategoryId);
+        if (empty($products)) echo 'not found';
+        else echo json_encode($products);
+//        echo $products;
     }
 
     public function getProductsByTitle()
