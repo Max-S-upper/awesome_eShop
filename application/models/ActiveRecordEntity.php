@@ -7,6 +7,7 @@ use config\Db;
 
 class ActiveRecordEntity
 {
+    /** @var \PDO */
     protected $db;
 
     public function __construct()

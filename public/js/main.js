@@ -244,4 +244,66 @@ $(document).ready(() => {
     };
 
     $(".pushCart").click($showCartProducts);
+
+    $(".filter input").on('change', (e) => {
+        let $subCategoryId = $(".filters-container").attr('data-subcategory-id');
+        let $checkedFiltersData = [];
+        $(".filter input:checked").each(($i, $checkedFilterData) => {
+            $checkedFiltersData = [...$checkedFiltersData, $checkedFilterData.id.split('filter')[1]];
+        });
+
+        if (!$checkedFiltersData[0]) {
+            $(".filter input").each(($i, $checkedFilterData) => {
+                $checkedFiltersData = [...$checkedFiltersData, $checkedFilterData.id.split('filter')[1]];
+            });
+        }
+
+        console.log($checkedFiltersData);
+        $.ajax({
+            url: '/filters',
+            type: 'post',
+            data: {
+                'subCategoryId': $subCategoryId,
+                'attributeIds': $checkedFiltersData
+            },
+            success: ($productsData) => {
+                console.log($productsData);
+                $(".product").remove();
+                $(".errors").remove();
+                if ($productsData === 'not found') {
+                    $errorHtml = `<div class="errors emphasized-container">
+                                    <p>Products not found</p>
+                                </div>`;
+                    $(".products").append($errorHtml);
+                }
+
+                else {
+                    $products = JSON.parse($productsData);
+                    $productsHtml = '';
+                    $($products).each(($i, $product) => {
+                        $productsHtml += `<div class="product">
+                                            <p class="brand">
+                                                <a href="http://eshop.com/brand/${$product['brand_id']}">${$product['brand']}</a>
+                                                <img src="/public/images/addToCart.png" class="add-to-cart" data-product-id="${$product['id']}" alt="Add to cart">
+                                            </p>
+                                            <a href="http://eshop.com/show/${$product['id']}">
+                                                <img src="/public/images/${$product['image']}" alt="${$product['title']}">
+                                            </a>
+                                            <p class="name">
+                                                <a href="http://eshop.com/show/${$product['id']}">${$product['title']}</a>
+                                            </p>`;
+                        $($product['attributes']).each(($i, $attribute) => {
+                            $productsHtml += `<span class="attributes">Attributes: ${$attribute['title']}</span>`;
+                        });
+
+                        $productsHtml += `    <span class="quantity">Available: <?= $product->quantity ?></span>
+                                          <span class="price"><?= $product->price ?>₴</span>
+                                        </div>`;
+                    });
+
+                    $(".products").append($productsHtml);
+                }
+            }
+        });
+    });
 });
