@@ -1,4 +1,4 @@
 <?php
-namespace application\exceptions;
+namespace application\components\exceptions;
 
 class StorageException extends \Exception {}

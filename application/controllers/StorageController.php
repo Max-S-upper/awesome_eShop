@@ -2,11 +2,13 @@
 namespace application\controllers;
 
 use application\components\Categories;
+use application\components\exceptions\RenderException;
 use application\components\Filters;
-use application\exceptions\SearchException;
-use application\Session;
-use application\exceptions\SessionException;
+use application\components\exceptions\SearchException;
+use core\Session;
+use application\components\exceptions\SessionException;
 use application\models\Product;
+use core\View;
 
 class StorageController
 {
@@ -14,13 +16,18 @@ class StorageController
     {
         try {
             Session::start();
-            $productObject = new Product();
-            $products = $productObject->getAll();
             $categoryHelper = new Categories();
             $categories = $categoryHelper->getAll();
+            $productObject = new Product();
+            $products = $productObject->getAll();
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT.'/application/views/main/main.php';
+            View::render('main', [
+                'products' => $products,
+                'usr_email' => $usr_email,
+                'categories' => $categories]);
         } catch (SessionException $e) {
+            echo $e->getMessage();
+        } catch (RenderException $e) {
             echo $e->getMessage();
         }
     }
@@ -40,8 +47,13 @@ class StorageController
             $product = $productObject->getById($id);
             Session::start();
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT.'/application/views/main/product.php';
+            View::render('product', [
+                'product' => $product,
+                'usr_email' => $usr_email
+            ]);
         } catch (SessionException $e) {
+            echo $e->getMessage();
+        } catch (RenderException $e) {
             echo $e->getMessage();
         }
     }
@@ -60,8 +72,14 @@ class StorageController
             }
 
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT.'/application/views/main/main.php';
+            View::render('main', [
+                'products' => $products,
+                'usr_email' => $usr_email,
+                'categories' => $categories,
+                'err' => $err]);
         } catch (SessionException $e) {
+            echo $e->getMessage();
+        } catch (RenderException $e) {
             echo $e->getMessage();
         }
     }
@@ -80,8 +98,14 @@ class StorageController
             }
 
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT.'/application/views/main/main.php';
+            View::render('main', [
+                'products' => $products,
+                'usr_email' => $usr_email,
+                'categories' => $categories,
+                'err' => $err]);
         } catch (SessionException $e) {
+            echo $e->getMessage();
+        } catch (RenderException $e) {
             echo $e->getMessage();
         }
     }
@@ -102,8 +126,15 @@ class StorageController
             }
 
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT.'/application/views/main/main.php';
+            View::render('main', [
+                'products' => $products,
+                'usr_email' => $usr_email,
+                'categories' => $categories,
+                'filters' => $filters,
+                'err' => $err]);
         } catch (SessionException $e) {
+            echo $e->getMessage();
+        } catch (RenderException $e) {
             echo $e->getMessage();
         }
     }
@@ -133,8 +164,14 @@ class StorageController
             }
 
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT.'/application/views/main/main.php';
+            View::render('main', [
+                'products' => $products,
+                'usr_email' => $usr_email,
+                'categories' => $categories,
+                'err' => $err]);
         } catch (SessionException $e) {
+            echo $e->getMessage();
+        } catch (RenderException $e) {
             echo $e->getMessage();
         }
     }

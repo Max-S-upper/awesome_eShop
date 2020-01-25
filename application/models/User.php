@@ -3,9 +3,9 @@
 
 namespace application\models;
 
-use application\exceptions\AuthorizationException;
-use application\exceptions\RegistrationException;
-use application\Session;
+use application\components\exceptions\AuthorizationException;
+use application\components\exceptions\RegistrationException;
+use core\Session;
 
 class User extends ActiveRecordEntity
 {
