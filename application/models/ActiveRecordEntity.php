@@ -3,7 +3,7 @@
 
 namespace application\models;
 
-use config\Db;
+use application\components\Db;
 
 class ActiveRecordEntity
 {

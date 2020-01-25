@@ -38,7 +38,6 @@ spl_autoload_register(function ($className) {
     }
 });
 
-use application\components\ActiveRecord;
 use application\components\Router;
 
 $routes = new Router();

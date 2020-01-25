@@ -1,3 +1,11 @@
+<?php
+require_once ROOT . '/application/views/includes/head.php';
+require_once ROOT.'/application/views/includes/wrapper.php';
+if ($usr_email) include(ROOT.'/application/views/includes/header_signed.php');
+else require_once ROOT . '/application/views/includes/header.php';
+require_once ROOT . '/application/views/includes/signInPopUp.php';
+require_once ROOT.'/application/views/includes/search.php';
+?>
 <main class="center-page">
     <?= $categories ?>
     <?= $filters ?>
@@ -28,3 +36,6 @@
             <?php endforeach; ?>
     </section>
 </main>
+<?php
+require_once ROOT.'/application/views/includes/footer.php';
+?>

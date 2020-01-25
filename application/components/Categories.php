@@ -4,7 +4,7 @@
 namespace application\components;
 
 
-use config\Db;
+use application\components\Db;
 
 class Categories
 {
