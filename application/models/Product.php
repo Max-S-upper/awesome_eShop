@@ -2,7 +2,7 @@
 
 namespace application\models;
 
-use application\exceptions\SearchException;
+use application\components\exceptions\SearchException;
 
 class Product  extends ActiveRecordEntity
 {
@@ -151,22 +151,9 @@ class Product  extends ActiveRecordEntity
         } else throw new SearchException("No results for $title");
     }
 
-//    public function getByAttribute($attributeIds)
-//    {
-//        $query = "SELECT product_id FROM products_attributes WHERE attribute_id = ";
-//        $attributesQuantity = count($attributeIds);
-//        for ($i = 0; $i < $attributesQuantity; $i++) {
-//             if (!$i) $query .= $attributeIds[$i];
-//             else $query .= " OR attribute_id = $attributeIds[$i]";
-//        }
-//
-//        return $this->db->connection->query($query)->fetchAll();
-//    }
-
     public function getByAttributeAndSubCategory($attributesIds, $subCategoryId)
     {
         $products = array();
-//        $query = "SELECT * FROM products WHERE subcategory_id = $subCategoryId";
         $query = "select products.* FROM products left join products_attributes on 
                     products.id = products_attributes.product_id where products.subcategory_id = $subCategoryId AND (";
         $attributesIdsQuantity = count($attributesIds);
@@ -176,7 +163,6 @@ class Product  extends ActiveRecordEntity
             if ($i === $attributesIdsQuantity - 1) $query .= ')';
         }
 
-//        return $query;
         $stmt = $this->db->connection->query($query);
         if ($stmt) $productsData = $stmt->fetchAll();
         else return '';

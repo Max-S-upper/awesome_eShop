@@ -1,8 +1,8 @@
 <?php
 namespace application\models;
 
-use application\Session;
-use application\exceptions\AuthorizationException;
+use core\Session;
+use application\components\exceptions\AuthorizationException;
 
 class Authorization
 {

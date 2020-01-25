@@ -38,7 +38,7 @@ spl_autoload_register(function ($className) {
     }
 });
 
-use application\components\Router;
+use core\Router;
 
 $routes = new Router();
 $routes->run();

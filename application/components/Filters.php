@@ -3,7 +3,7 @@
 
 namespace application\components;
 
-use application\components\Db;
+use core\Db;
 
 class Filters
 {

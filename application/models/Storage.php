@@ -1,7 +1,7 @@
 <?php
 namespace application\models;
 
-use application\exceptions\StorageException;
+use application\components\exceptions\StorageException;
 
 class Storage
 {

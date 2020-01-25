@@ -3,10 +3,10 @@
 
 namespace application\controllers;
 
-use application\exceptions\RegistrationException;
-use application\exceptions\SessionException;
+use application\components\exceptions\RegistrationException;
+use application\components\exceptions\SessionException;
 use application\models\User;
-use application\Session;
+use core\Session;
 
 class RegistrationController
 {

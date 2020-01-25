@@ -1,10 +1,10 @@
 <?php
 namespace application\controllers;
 
-use application\Session;
+use core\Session;
 use application\models\Authorization;
-use application\exceptions\SessionException;
-use application\exceptions\AuthorizationException;
+use application\components\exceptions\SessionException;
+use application\components\exceptions\AuthorizationException;
 use application\models\User;
 use PHPUnit\Util\Exception;
 

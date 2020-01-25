@@ -3,7 +3,7 @@
 
 namespace application\models;
 
-use application\components\Db;
+use core\Db;
 
 class ActiveRecordEntity
 {
@@ -15,15 +15,34 @@ class ActiveRecordEntity
         $this->db = new Db;
     }
 
-//    public function getById($id)
-//    {
-//        return $this->db->connection->query("SELECT * FROM " . $this->getTableName() . " WHERE id = $id")->fetchAll();
-//    }
+    public function getById($ids)
+    {
+        $query = "SELECT * FROM " . $this->getTableName() . " WHERE id = ";
+        for ($i = 0; $i < count($ids); $i++) {
+            if (!$i) $query .= "$ids[$i]";
+            else $query .= " OR id = $ids[$i]";
+        }
+
+        $itemsData = $this->db->connection->query($query)->fetchAll();
+        $items = array();
+        foreach ($itemsData as $item) {
+            $itemObject = new self();
+            foreach ($item as $key => $value) {
+                $itemObject->$key = $value;
+            }
+
+            if (count($itemsData) === 1) return $itemObject;
+            $items[] = $itemObject;
+        }
+
+        return $items;
+    }
 
     public function getAll()
     {
+        $itemsData = $this->db->connection->query("SELECT * FROM " . $this->getTableName())->fetchAll();
         $items = array();
-        foreach ($this->db->connection->query("SELECT * FROM " . $this->getTableName())->fetchAll() as $item) {
+        foreach ($itemsData as $item) {
             $itemObject = new self();
             foreach ($item as $key => $value) {
                 $itemObject->$key = $value;

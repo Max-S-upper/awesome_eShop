@@ -1,7 +1,7 @@
 <?php
-namespace application;
+namespace core;
 
-use application\exceptions\SessionException;
+use application\components\exceptions\SessionException;
 
 class Session
 {

@@ -1,10 +1,10 @@
 <?php
 namespace application\controllers;
 
-use application\exceptions\RegistrationException;
+use application\components\exceptions\RegistrationException;
 use application\models\User;
-use application\Session;
-use application\exceptions\SessionException;
+use core\Session;
+use application\components\exceptions\SessionException;
 
 class UserController
 {
