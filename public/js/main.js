@@ -296,8 +296,8 @@ $(document).ready(() => {
                             $productsHtml += `<span class="attributes">Attributes: ${$attribute['title']}</span>`;
                         });
 
-                        $productsHtml += `    <span class="quantity">Available: <?= $product->quantity ?></span>
-                                          <span class="price"><?= $product->price ?>₴</span>
+                        $productsHtml += `    <span class="quantity">Available: ${$product['quantity']}</span>
+                                          <span class="price">${$product['price']}₴</span>
                                         </div>`;
                     });
 
