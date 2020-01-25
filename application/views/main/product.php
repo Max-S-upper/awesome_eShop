@@ -1,3 +1,12 @@
+<?php
+require_once ROOT . '/application/views/includes/head.php';
+require_once ROOT.'/application/views/includes/wrapper_product.php';
+if ($usr_email) require_once ROOT.'/application/views/includes/header_signed.php';
+else require_once ROOT . '/application/views/includes/header.php';
+require_once ROOT . '/application/views/includes/signInPopUp.php';
+require_once ROOT.'/application/views/includes/search.php';
+
+?>
 <main>
     <section class="emphasized-container">
         <form action="" method="post" class="product-container">
@@ -71,3 +80,6 @@
         </div>
     </section>
 </main>
+<?php
+require_once ROOT.'/application/views/includes/footer.php';
+?>

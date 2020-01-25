@@ -1,6 +1,6 @@
 <?php
 
-namespace config;
+namespace application\components;
 
 class Db
 {

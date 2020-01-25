@@ -19,14 +19,7 @@ class StorageController
             $categoryHelper = new Categories();
             $categories = $categoryHelper->getAll();
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT . '/application/views/includes/head.php';
-            require_once ROOT.'/application/views/includes/wrapper.php';
-            if ($usr_email) include(ROOT.'/application/views/includes/header_signed.php');
-            else require_once ROOT . '/application/views/includes/header.php';
-            require_once ROOT . '/application/views/includes/signInPopUp.php';
-            require_once ROOT.'/application/views/includes/search.php';
             require_once ROOT.'/application/views/main/main.php';
-            require_once ROOT.'/application/views/includes/footer.php';
         } catch (SessionException $e) {
             echo $e->getMessage();
         }
@@ -46,18 +39,8 @@ class StorageController
             $productObject = new Product();
             $product = $productObject->getById($id);
             Session::start();
-            require_once ROOT . '/application/views/includes/head.php';
-            require_once ROOT.'/application/views/includes/wrapper_product.php';
-            if (Session::contains('email')) {
-                $usr_email = Session::get('email');
-                require_once ROOT.'/application/views/includes/header_signed.php';
-            }
-
-            else require_once ROOT . '/application/views/includes/header.php';
-            require_once ROOT . '/application/views/includes/signInPopUp.php';
-            require_once ROOT.'/application/views/includes/search.php';
+            if (Session::contains('email')) $usr_email = Session::get('email');
             require_once ROOT.'/application/views/main/product.php';
-            require_once ROOT.'/application/views/includes/footer.php';
         } catch (SessionException $e) {
             echo $e->getMessage();
         }
@@ -77,14 +60,7 @@ class StorageController
             }
 
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT . '/application/views/includes/head.php';
-            require_once ROOT.'/application/views/includes/wrapper.php';
-            if ($usr_email) include(ROOT.'/application/views/includes/header_signed.php');
-            else require_once ROOT . '/application/views/includes/header.php';
-            require_once ROOT . '/application/views/includes/signInPopUp.php';
-            require_once ROOT.'/application/views/includes/search.php';
             require_once ROOT.'/application/views/main/main.php';
-            require_once ROOT.'/application/views/includes/footer.php';
         } catch (SessionException $e) {
             echo $e->getMessage();
         }
@@ -104,14 +80,7 @@ class StorageController
             }
 
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT . '/application/views/includes/head.php';
-            require_once ROOT.'/application/views/includes/wrapper.php';
-            if ($usr_email) include(ROOT.'/application/views/includes/header_signed.php');
-            else require_once ROOT . '/application/views/includes/header.php';
-            require_once ROOT . '/application/views/includes/signInPopUp.php';
-            require_once ROOT.'/application/views/includes/search.php';
             require_once ROOT.'/application/views/main/main.php';
-            require_once ROOT.'/application/views/includes/footer.php';
         } catch (SessionException $e) {
             echo $e->getMessage();
         }
@@ -133,14 +102,7 @@ class StorageController
             }
 
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT . '/application/views/includes/head.php';
-            require_once ROOT.'/application/views/includes/wrapper.php';
-            if ($usr_email) include(ROOT.'/application/views/includes/header_signed.php');
-            else require_once ROOT . '/application/views/includes/header.php';
-            require_once ROOT . '/application/views/includes/signInPopUp.php';
-            require_once ROOT.'/application/views/includes/search.php';
             require_once ROOT.'/application/views/main/main.php';
-            require_once ROOT.'/application/views/includes/footer.php';
         } catch (SessionException $e) {
             echo $e->getMessage();
         }
@@ -154,7 +116,6 @@ class StorageController
         $products = $product->getByAttributeAndSubCategory($attributeIds, $subCategoryId);
         if (empty($products)) echo 'not found';
         else echo json_encode($products);
-//        echo $products;
     }
 
     public function getProductsByTitle()
@@ -172,14 +133,7 @@ class StorageController
             }
 
             if (Session::contains('email')) $usr_email = Session::get('email');
-            require_once ROOT . '/application/views/includes/head.php';
-            require_once ROOT.'/application/views/includes/wrapper.php';
-            if ($usr_email) include(ROOT.'/application/views/includes/header_signed.php');
-            else require_once ROOT . '/application/views/includes/header.php';
-            require_once ROOT . '/application/views/includes/signInPopUp.php';
-            require_once ROOT.'/application/views/includes/search.php';
             require_once ROOT.'/application/views/main/main.php';
-            require_once ROOT.'/application/views/includes/footer.php';
         } catch (SessionException $e) {
             echo $e->getMessage();
         }
