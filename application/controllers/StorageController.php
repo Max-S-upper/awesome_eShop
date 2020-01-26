@@ -5,6 +5,7 @@ use application\components\Categories;
 use application\components\exceptions\RenderException;
 use application\components\Filters;
 use application\components\exceptions\SearchException;
+use application\components\Pagination;
 use core\Session;
 use application\components\exceptions\SessionException;
 use application\models\Product;
@@ -12,19 +13,24 @@ use core\View;
 
 class StorageController
 {
-    public function getProducts()
+    protected $productsPerPageQuantity = 4;
+    public function getProductsByPage()
     {
         try {
             Session::start();
             $categoryHelper = new Categories();
             $categories = $categoryHelper->getAll();
+            $paginationHelper = new Pagination($this->productsPerPageQuantity);
+            $pageNum = array_key_exists('page-num', $_POST) ? $_POST['page-num'] : 1;
+            $pagination = $paginationHelper->getHtml($pageNum);
             $productObject = new Product();
-            $products = $productObject->getAll();
+            $products = $productObject->getByPage($pageNum, $this->productsPerPageQuantity);
             if (Session::contains('email')) $usr_email = Session::get('email');
             View::render('main', [
                 'products' => $products,
                 'usr_email' => $usr_email,
-                'categories' => $categories]);
+                'categories' => $categories,
+                'pagination' => $pagination]);
         } catch (SessionException $e) {
             echo $e->getMessage();
         } catch (RenderException $e) {

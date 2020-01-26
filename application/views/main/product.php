@@ -5,7 +5,6 @@ if ($usr_email) require_once ROOT.'/application/views/includes/header_signed.php
 else require_once ROOT . '/application/views/includes/header.php';
 require_once ROOT . '/application/views/includes/signInPopUp.php';
 require_once ROOT.'/application/views/includes/search.php';
-
 ?>
 <main>
     <section class="emphasized-container">
@@ -30,9 +29,11 @@ require_once ROOT.'/application/views/includes/search.php';
                     <span><?= $product->price ?>₴</span>
                 </p>
                 <p class="attributes">
+                    <span>Attributes:
                     <?php foreach($product->attributes as $attribute) : ?>
-                        <span>Attributes: <?= $attribute->title ?>,</span>
+                         <?= $attribute->title ?>,
                     <?php endforeach; ?>
+                    </span>
                     <?php foreach($product->alikeOnes as $productAlike): ?>
                         <a href="<?= 'http://eshop.com/show/'.$productAlike['id'] ?>" class="product-alike"> <?= $productAlike['title'] ?>,</a>
                     <?php endforeach; ?>
