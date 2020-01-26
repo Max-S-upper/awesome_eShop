@@ -6,35 +6,50 @@ use application\components\exceptions\SearchException;
 
 class Product  extends ActiveRecordEntity
 {
+    public function setProductData($product)
+    {
+        $brandObject = new Brand();
+        $brandTitle = $brandObject->getTitle($product['brand_id']);
+        $productAttributesObject = new ProductAttribute();
+        $productAttributes = $productAttributesObject->getAttributesIdByProductId($product['id']);
+        $attributeObject = new Attribute();
+        $attributes = array();
+        foreach ($productAttributes as $productAttribute) {
+            $attributes[] = $attributeObject->getTitle($productAttribute->attributeId);
+        }
+
+        $productAlikeObject = new ProductAlike();
+        $productsAlike = [];
+        foreach ($productAlikeObject->getByProductId($product['id']) as $productAlike) {
+            $productAttribute = new ProductAttribute();
+            $productAttributes = $productAttribute->getAttributesIdByProductId($productAlike->id);
+            foreach ($productAttributes as $productAttribute) {
+                $attributeObject = new Attribute();
+                $attribute = $attributeObject->getTitle($productAttribute->attributeId);
+                $productsAlike[] = [
+                    'id' => $productAlike->id,
+                    'title' => $attribute->title
+                ];
+            }
+        }
+
+        $productObject = new self();
+
+        foreach ($product as $key => $value) {
+            $productObject->$key = $value;
+        }
+
+        $productObject->brand = $brandTitle;
+        $productObject->attributes = $attributes;
+        $productObject->alikeOnes = $productsAlike;
+        return $productObject;
+    }
+
     public function getAll()
     {
         $products = array();
         foreach ($this->db->connection->query("SELECT * FROM " . $this->getTableName())->fetchAll() as $product) {
-            $brandObject = new Brand();
-            $brandTitle = $brandObject->getTitle($product['brand_id']);
-            $productAttributesObject = new ProductAttribute();
-            $productAttributes = $productAttributesObject->getAttributesIdByProductId($product['id']);
-            $attributeObject = new Attribute();
-            $attributes = array();
-            foreach ($productAttributes as $productAttribute) {
-                $attributes[] = $attributeObject->getTitle($productAttribute->attributeId);
-            }
-
-            $productObject = new self();
-            $productObject->id = $product['id'];
-            $productObject->title = $product['title'];
-            $productObject->description = $product['description'];
-            $productObject->sale_price = $product['sale_price'];
-            $productObject->code = $product['code'];
-            $productObject->brand_id = $product['brand_id'];
-            $productObject->is_sale = $product['is_sale'];
-            $productObject->image = $product['image'];
-            $productObject->brand = $brandTitle;
-            $productObject->brand_id = $product['brand_id'];
-            $productObject->price = $product['price'];
-            $productObject->quantity = $product['quantity'];
-            $productObject->attributes = $attributes;
-            $products[] = $productObject;
+            $products[] = $this->setProductData($product);
         }
 
         return $products;
@@ -51,47 +66,8 @@ class Product  extends ActiveRecordEntity
         $productsData = $this->db->connection->query($query)->fetchAll();
         $products = [];
         foreach ($productsData as $product) {
-            $brandObject = new Brand();
-            $brandTitle = $brandObject->getTitle($product['brand_id']);
-            $productAttributesObject = new ProductAttribute();
-            $productAttributes = $productAttributesObject->getAttributesIdByProductId($product['id']);
-            $attributeObject = new Attribute();
-            $attributes = array();
-            foreach ($productAttributes as $productAttribute) {
-                $attributes[] = $attributeObject->getTitle($productAttribute->attributeId);
-            }
 
-            $productAlikeObject = new ProductAlike();
-            $productsAlike = [];
-            foreach ($productAlikeObject->getByProductId($product['id']) as $productAlike) {
-                $productAttribute = new ProductAttribute();
-                $productAttributes = $productAttribute->getAttributesIdByProductId($productAlike->id);
-                foreach ($productAttributes as $productAttribute) {
-                    $attributeObject = new Attribute();
-                    $attribute = $attributeObject->getTitle($productAttribute->attributeId);
-                    $productsAlike[] = [
-                        'id' => $productAlike->id,
-                        'title' => $attribute->title
-                    ];
-                }
-            }
-
-            $productObject = new self();
-            $productObject->id = $product['id'];
-            $productObject->title = $product['title'];
-            $productObject->description = $product['description'];
-            $productObject->sale_price = $product['sale_price'];
-            $productObject->code = $product['code'];
-            $productObject->brand_id = $product['brand_id'];
-            $productObject->is_sale = $product['is_sale'];
-            $productObject->image = $product['image'];
-            $productObject->brand = $brandTitle;
-            $productObject->brand_id = $product['brand_id'];
-            $productObject->price = $product['price'];
-            $productObject->quantity = $product['quantity'];
-            $productObject->attributes = $attributes;
-            $productObject->alikeOnes = $productsAlike;
-
+            $productObject = $this->setProductData($product);
             if (count($productsData) === 1) return $productObject;
             $products[] = $productObject;
         }
@@ -194,18 +170,11 @@ class Product  extends ActiveRecordEntity
             }
 
             $productObject = new self();
-            $productObject->id = $product['id'];
-            $productObject->title = $product['title'];
-            $productObject->description = $product['description'];
-            $productObject->sale_price = $product['sale_price'];
-            $productObject->code = $product['code'];
-            $productObject->brand_id = $product['brand_id'];
-            $productObject->is_sale = $product['is_sale'];
-            $productObject->image = $product['image'];
+            foreach ($product as $key => $value) {
+                $productObject->$key = $value;
+            }
+
             $productObject->brand = $brandTitle;
-            $productObject->brand_id = $product['brand_id'];
-            $productObject->price = $product['price'];
-            $productObject->quantity = $product['quantity'];
             $productObject->attributes = $attributes;
             $productObject->alikeOnes = $productsAlike;
 
@@ -214,6 +183,21 @@ class Product  extends ActiveRecordEntity
         }
 
         return $products;
+    }
+
+    public function getByPage($pageNum, $productsPerPageQuantity)
+    {
+        $products = array();
+        foreach ($this->db->connection->query("SELECT * FROM " . $this->getTableName() . " LIMIT " . (($pageNum - 1) * $productsPerPageQuantity) . ", $productsPerPageQuantity")->fetchAll() as $product) {
+            $products[] = $this->setProductData($product);
+        }
+
+        return $products;
+    }
+
+    public function getQuantity()
+    {
+        return intval($this->db->connection->query("SELECT count(id) FROM products")->fetchColumn());
     }
 
     public function getTableName()

@@ -27,14 +27,11 @@ require_once ROOT.'/application/views/includes/search.php';
                     <p class="name">
                         <a href="http://eshop.com/show/<?= $product->id ?>"><?= $product->title ?></a>
                     </p>
-                    <?php foreach($product->attributes as $attribute) : ?>
-                        <span class="attributes">Attributes: <?= $attribute->title ?></span>
-                    <?php endforeach; ?>
-                    <span class="quantity">Available: <?= $product->quantity ?></span>
                     <span class="price"><?= $product->price ?>₴</span>
                 </div>
             <?php endforeach; ?>
     </section>
+    <?= $pagination ?>
 </main>
 <?php
 require_once ROOT.'/application/views/includes/footer.php';

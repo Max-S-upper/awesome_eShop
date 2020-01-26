@@ -609,6 +609,21 @@ input.quantity-data {
     margin-right: 1em;
 }
 
+.pagination-container {
+    text-align: center;
+}
+
+.pagination-page {
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+
+.pagination-page-active {
+    border: 2px #fdc153 solid;
+}
+
 @media screen and (max-width: 1200px) {
     .products {
         grid-template-columns: 1fr 1fr 1fr;

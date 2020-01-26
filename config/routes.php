@@ -13,5 +13,5 @@ return array(
     'signup' => 'registration/showRegistrationPage',
     'registered' => 'registration/createCustomer',
     'profile' => 'authorization/showWelcomePage',
-    '' => 'storage/getProducts'
+    '' => 'storage/getProductsByPage'
 );
