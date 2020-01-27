@@ -3,16 +3,10 @@
 
 namespace application\components;
 
-use core\Db;
+use core\HelperPattern;
 
-class Filters
+class Filters extends HelperPattern
 {
-    protected $db;
-    public function __construct()
-    {
-        $this->db = new Db;
-    }
-
     public function getBySubCategory($subCategoryId)
     {
         $filterBlockAttributeIds = $this->db->connection->query("SELECT filter_block_attributes.filter_block_id, filter_block_attributes.attribute_id

@@ -30,13 +30,10 @@ require_once ROOT.'/application/views/includes/search.php';
                 </p>
                 <p class="attributes">
                     <span>Attributes:
-                    <?php foreach($product->attributes as $attribute) : ?>
-                         <?= $attribute->title ?>,
-                    <?php endforeach; ?>
+                        <?php foreach($product->attributes as $attribute) : ?>
+                             <?= $attribute->title ?>,
+                        <?php endforeach; ?>
                     </span>
-                    <?php foreach($product->alikeOnes as $productAlike): ?>
-                        <a href="<?= 'http://eshop.com/show/'.$productAlike['id'] ?>" class="product-alike"> <?= $productAlike['title'] ?>,</a>
-                    <?php endforeach; ?>
                 </p>
                 <div class="actions-container">
                     <input type="submit" name="buy" value="Buy">
@@ -78,6 +75,23 @@ require_once ROOT.'/application/views/includes/search.php';
                     <input type="submit" name="comment-submit" class="button-primary" value="Send">
                 </div>
             </form>
+        </div>
+        <div class="alike-products">
+            <?php foreach ($productsAlike as $product): ?>
+                <div class="product">
+                    <p class="brand">
+                        <a href="http://eshop.com/brand/<?= $product->brand_id ?>"><?= $product->brand ?></a>
+                        <img src="/public/images/addToCart.png" class="add-to-cart" data-product-id="<?= $product->id ?>" alt="Add to cart">
+                    </p>
+                    <a href="http://eshop.com/show/<?= $product->id ?>">
+                        <img src="/public/images/<?= $product->image ?>" alt="<?= $product->title ?>">
+                    </a>
+                    <p class="name">
+                        <a href="http://eshop.com/show/<?= $product->id ?>"><?= $product->title ?></a>
+                    </p>
+                    <span class="price"><?= $product->price ?>₴</span>
+                </div>
+            <?php endforeach; ?>
         </div>
     </section>
 </main>
