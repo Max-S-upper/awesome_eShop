@@ -6,6 +6,8 @@ use application\components\exceptions\RenderException;
 use application\components\Filters;
 use application\components\exceptions\SearchException;
 use application\components\Pagination;
+use application\components\ProductsAlike;
+use application\models\ProductAlike;
 use core\Session;
 use application\components\exceptions\SessionException;
 use application\models\Product;
@@ -51,11 +53,14 @@ class StorageController
         try {
             $productObject = new Product();
             $product = $productObject->getById($id);
+            $productsAlikeHelper = new ProductsAlike();
+            $productsAlike = $productsAlikeHelper->getHtml($id);
             Session::start();
             if (Session::contains('email')) $usr_email = Session::get('email');
             View::render('product', [
                 'product' => $product,
-                'usr_email' => $usr_email
+                'usr_email' => $usr_email,
+                'productsAlike' => $productsAlike
             ]);
         } catch (SessionException $e) {
             echo $e->getMessage();

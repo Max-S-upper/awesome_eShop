@@ -624,6 +624,11 @@ input.quantity-data {
     border: 2px #fdc153 solid;
 }
 
+.alike-products {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
 @media screen and (max-width: 1200px) {
     .products {
         grid-template-columns: 1fr 1fr 1fr;

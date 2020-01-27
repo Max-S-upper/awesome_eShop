@@ -4,21 +4,14 @@
 namespace application\components;
 
 
-use core\Db;
+use core\HelperPattern;
 
-class Categories
+class Categories extends HelperPattern
 {
-    protected $db;
     public $id;
     public $title;
     public $subCategoryId;
     public $subCategoryTitle;
-
-    public function __construct()
-    {
-        $this->db = new Db;
-    }
-
     public function getAll()
     {
         $categoriesData = $this->db->connection->query("SELECT categories.*, subcategories.id, subcategories.title 

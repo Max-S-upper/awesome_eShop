@@ -18,21 +18,6 @@ class Product  extends ActiveRecordEntity
             $attributes[] = $attributeObject->getTitle($productAttribute->attributeId);
         }
 
-        $productAlikeObject = new ProductAlike();
-        $productsAlike = [];
-        foreach ($productAlikeObject->getByProductId($product['id']) as $productAlike) {
-            $productAttribute = new ProductAttribute();
-            $productAttributes = $productAttribute->getAttributesIdByProductId($productAlike->id);
-            foreach ($productAttributes as $productAttribute) {
-                $attributeObject = new Attribute();
-                $attribute = $attributeObject->getTitle($productAttribute->attributeId);
-                $productsAlike[] = [
-                    'id' => $productAlike->id,
-                    'title' => $attribute->title
-                ];
-            }
-        }
-
         $productObject = new self();
 
         foreach ($product as $key => $value) {
@@ -41,7 +26,6 @@ class Product  extends ActiveRecordEntity
 
         $productObject->brand = $brandTitle;
         $productObject->attributes = $attributes;
-        $productObject->alikeOnes = $productsAlike;
         return $productObject;
     }
 
