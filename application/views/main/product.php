@@ -4,18 +4,19 @@ require_once ROOT.'/application/views/includes/wrapper_product.php';
 if ($usr_email) require_once ROOT.'/application/views/includes/header_signed.php';
 else require_once ROOT . '/application/views/includes/header.php';
 require_once ROOT . '/application/views/includes/signInPopUp.php';
+require_once ROOT . '/application/views/includes/orderPopUp.php';
 require_once ROOT.'/application/views/includes/search.php';
 ?>
 <main>
     <section class="emphasized-container">
-        <form action="" method="post" class="product-container">
+        <form method="post" class="product-container">
             <div class="single-product-image">
                 <p class="brand">
                     <a href="http://eshop.com/brand/<?= $product->brand_id ?>"><?= $product->brand ?></a>
                 </p>
                 <img src="/public/images/<?= $product->image ?>" alt="<?= $product->title ?>">
             </div>
-            <div class="single-product-data">
+            <div class="single-product-data" data-product-id="<?= $product->id ?>">
                 <p class="name">
                     <h1><?= $product->title ?></h1>
                 </p>
@@ -29,15 +30,25 @@ require_once ROOT.'/application/views/includes/search.php';
                     <span><?= $product->price ?>₴</span>
                 </p>
                 <p class="attributes">
-                    <span>Attributes:
-                        <?php foreach($product->attributes as $attribute) : ?>
-                             <?= $attribute->title ?>,
-                        <?php endforeach; ?>
-                    </span>
+                    Attributes:
+                    <?php
+                    if (count($product->attributes) > 1):
+                        foreach($product->attributes as $attribute) : ?>
+                            <span data-attribute-id="<?= $attribute->id ?>">
+                                <?= $attribute->title ?>,
+                            </span>
+                        <?php endforeach;
+                    endif;
+                    if (count($product->attributes) === 1): ?>
+                        <span data-attribute-id="<?= $product->attributes->id ?>">
+                            <?= $product->attributes->title ?>,
+                        </span>
+                    <?php endif; ?>
                 </p>
                 <div class="actions-container">
-                    <input type="submit" name="buy" value="Buy">
-                    <p class="button-primary add-to-cart-btn" data-product-id="<?= $product->id ?>">Add to cart</p>
+                    <input id="buy-product" type="submit" class="hidden" name="buy-product" value="<?= $product->id ?>">
+                    <label for="buy-product" class="buy-product">Buy</label>
+                    <p class="button-primary add-to-cart-btn">Add to cart</p>
                 </div>
             </div>
         </form>

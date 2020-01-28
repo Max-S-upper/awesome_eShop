@@ -1,4 +1,19 @@
 $(document).ready(() => {
+    let $showErrorInPopUp = ($errorsContainer, $err) => {
+        let $errorsBlock = $("#js-err");
+        if ($errorsBlock.length) $errorsBlock.remove();
+        let $errBlockHtml = `<div id="js-err" class="errors-container">
+                            <strong>Whoops! Something went wrong.</strong>
+                            <ul>`;
+        $($err).each(($i, $singleErrorData) => {
+            $errBlockHtml += '<li>' + $singleErrorData + '</li>';
+        });
+
+        $errBlockHtml += `</ul>
+                        </div>`;
+        $errorsContainer.prepend($errBlockHtml);
+    };
+
     $(".submit-container input[name=signUp]").click((e) => {
         e.preventDefault();
         let $err = [];
@@ -8,18 +23,8 @@ $(document).ready(() => {
         if (!$(".password-container input[name=password]").val()) $err.push("Please, enter your password.");
         if (!$(".password-container input[name=confirm-password]").val()) $err.push("Please, confirm your password.");
         else if ($(".password-container input[name=confirm-password]").val() !== $(".password-container input[name=password]").val()) $err.push("Passwords don't much.");
-        $(".errors-container").remove();
-        let $errBlockHtml = `<div class="errors-container">
-                            <strong>Whoops! Something went wrong.</strong>
-                            <ul>`;
-        $($err).each(($i, $singleErrorData) => {
-            $errBlockHtml += '<li>' + $singleErrorData + '</li>';
-        });
-
-        $errBlockHtml += `</ul>
-                        </div>`;
         if (!$err[0]) $(".signUp form").submit();
-        else $(".signUp form").prepend($errBlockHtml);
+        else $showErrorInPopUp($(".signUp form"), $err);
     });
 
     $(".pushLogin").click(() => {
@@ -54,15 +59,10 @@ $(document).ready(() => {
             },
             success: ($answer) => {
                 if ($answer !== 'ok') {
-                    let $errorsContent = `<strong>Whoops! Something went wrong.</strong>
-                                            <ul>
-                                                <li>${$answer}</li>
-                                            </ul>`;
-                    $(".login-container .errors-container").html($errorsContent);
+                    $showErrorInPopUp($(".errors-container"), [$answer]);
                 }
 
                 else {
-                    // $('header').remove();
                     let $cartCount = $(".cart-quantity").text();
                     $('header').load('http://eshop.com/application/views/includes/header_signed.php', function() {
                         setTimeout(() => $disappearContainer($(".login-container")), 100);
@@ -305,5 +305,64 @@ $(document).ready(() => {
                 }
             }
         });
+    });
+
+    $("#buy-product").click((e) => {
+        e.preventDefault();
+        $.ajax({
+            url: '/isAuthorized',
+            type: 'get',
+            success: ($data) => {
+                let $user = JSON.parse($data);
+                console.log($user);
+                if ($user['errorMessage'] === 'not authorized') {
+                    $appearContainer($(".login-container"));
+                }
+
+                else if ($user['errorMessage']) {
+                    alert($user['errorMessage']);
+                }
+
+                else {
+                    console.log($user['data']['phone']);
+                    if ($user['data']['phone']) $(".order-note input[name=phone]").val($user['data']['phone']);
+                    $appearContainer($(".order-note-container"));
+                    $(".close-container").click(() => $disappearContainer($(".order-note-container")));
+                    $(".order-submit").click(() => {
+                        let $phoneNumber = $(".order-note input[name=phone]").val();
+                        let $note = $(".order-note textarea[name=order-note]").val();
+                        let $productId = $(".single-product-data").attr("data-product-id");
+                        let $price = $(".price span").text().split('₴')[0];
+                        let $attributes = [];
+                        document.querySelectorAll(".attributes > span").forEach(($attribute) => {
+                            $attributes.push($attribute.getAttribute('data-attribute-id'));
+                        });
+
+                        if (!$phoneNumber) {
+                            $showErrorInPopUp($(".errors-container"), ['Please, enter your phone number']);
+                        }
+
+                        else {
+                            $.ajax({
+                                url: '/order',
+                                type: 'post',
+                                data: {
+                                    'userId': $user['data']['id'],
+                                    'productId': $productId,
+                                    'quantity': 1,
+                                    'attributes': $attributes,
+                                    'price': $price,
+                                    'phoneNumber': $phoneNumber,
+                                    'note': $note
+                                },
+                                success: ($answer) => {
+
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        })
     });
 });

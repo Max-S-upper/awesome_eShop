@@ -232,6 +232,7 @@ form.search input[name=search]:hover {
 }
 
 .email-container span,
+.container-field span,
 .password-container span{
     display: block;
     font-size: .875rem;
@@ -245,7 +246,9 @@ form.search input[name=search]:hover {
 .email-container input,
 .password-container input,
 .name-container input,
-.surname-container input {
+.surname-container input,
+.container-field input,
+.container-field textarea {
     margin-top: .25rem;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -262,13 +265,19 @@ form.search input[name=search]:hover {
     outline: none;
 }
 
+.container-field textarea {
+    padding: 10px;
+}
+
 .login input,
-.signUp input {
+.signUp input,
+.container-field input {
     padding: 7px;
 }
 
 .login .emphasized-container > label,
-.signUp .emphasized-container > label {
+.signUp .emphasized-container > label,
+.container-field {
     display: block;
     margin-top: 1em;
 }
@@ -278,7 +287,8 @@ form.search input[name=search]:hover {
 }
 
 .login .emphasized-container,
-.signUp .emphasized-container{
+.signUp .emphasized-container,
+.pop-up .emphasized-container {
     width: 24rem;
     padding: 30px 20px;
     border-radius: 8px;
@@ -305,6 +315,10 @@ form.search input[name=search]:hover {
 .category:hover,
 .sub-category:hover {
     color: rgba(0, 0, 0, .7);
+}
+
+.container-field .order-note {
+    height: 170px;
 }
 
 .brand {
@@ -351,7 +365,10 @@ form.search input[name=search]:hover {
     font-size: 34px;
 }
 
-input[name=buy] {
+.buy-product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #34c678;
     color: #fff;
     opacity: 1;
@@ -368,11 +385,11 @@ input[name=buy] {
     transition: .5s ease;
 }
 
-input[name=buy]:hover {
+.buy-product:hover {
     background-color: #56dc95;
 }
 
-input[name=buy]:focus {
+.buy-product:focus {
     box-shadow: none;
     border: solid 1px #3489c6;
 }
@@ -505,7 +522,8 @@ input.quantity-data {
 }
 
 .login-container,
-.cart-container{
+.cart-container,
+.pop-up {
     display: flex;
     position: fixed;
     top: 0;
@@ -528,7 +546,9 @@ input.quantity-data {
 }
 
 .login-container .login,
-.cart-container .cart {
+.cart-container .cart,
+.container-field input,
+.container-field textarea {
     width: 100%;
     height: 100%;
 }
@@ -544,7 +564,8 @@ input.quantity-data {
     justify-content: flex-end;
 }
 
-.close-login {
+.close-login,
+.close-container {
     font-size: 19px;
     cursor: pointer;
 }
