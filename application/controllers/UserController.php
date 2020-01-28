@@ -20,6 +20,7 @@ class UserController
             try {
                 Session::delete('email');
                 Session::delete('login_err');
+                Session::delete('id');
             } catch (SessionException $e) {
                 $err = $e->getMessage();
             }
@@ -32,5 +33,31 @@ class UserController
     {
         $user = new User();
         if ($user->emailExists($email)) throw new RegistrationException('Account with this email already exists');
+    }
+
+    public function isAuthorized()
+    {
+        try {
+            Session::start();
+            if (Session::contains('id')) {
+                $user = new User();
+                echo json_encode([
+                    'data' => $user->getById(Session::get('id')),
+                    'error' => null
+                ]);
+            }
+
+            else {
+                echo json_encode([
+                    'data' => null,
+                    'errorMessage' => 'not authorized'
+                ]);
+            }
+        } catch (SessionException $e) {
+            echo json_encode([
+                'data' => null,
+                'errorMessage' => $e->getMessage()
+            ]);
+        }
     }
 }

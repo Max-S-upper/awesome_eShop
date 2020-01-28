@@ -18,7 +18,8 @@ class ActiveRecordEntity
     public function getById($ids)
     {
         $query = "SELECT * FROM " . $this->getTableName() . " WHERE id = ";
-        for ($i = 0; $i < count($ids); $i++) {
+        $idsQuantity = count($ids);
+        for ($i = 0; $i < $idsQuantity; $i++) {
             if (!$i) $query .= "$ids[$i]";
             else $query .= " OR id = $ids[$i]";
         }

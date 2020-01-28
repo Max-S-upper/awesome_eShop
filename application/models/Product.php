@@ -12,14 +12,15 @@ class Product  extends ActiveRecordEntity
         $brandTitle = $brandObject->getTitle($product['brand_id']);
         $productAttributesObject = new ProductAttribute();
         $productAttributes = $productAttributesObject->getAttributesIdByProductId($product['id']);
-        $attributeObject = new Attribute();
-        $attributes = array();
+        $attributesIds = array();
         foreach ($productAttributes as $productAttribute) {
-            $attributes[] = $attributeObject->getTitle($productAttribute->attributeId);
+            $attributesIds[] = $productAttribute->attributeId;
         }
 
-        $productObject = new self();
+        $attributeObject = new Attribute();
+        $attributes = $attributeObject->getById($attributesIds);
 
+        $productObject = new self();
         foreach ($product as $key => $value) {
             $productObject->$key = $value;
         }

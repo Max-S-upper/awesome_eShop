@@ -7,11 +7,11 @@ return array(
     'subCategory/([0-9]+)' => 'storage/getProductsBySubCategory/$1',
     'search' => 'storage/getProductsByTitle',
     'cart-data' => 'storage/getProductsByIds',
-    'login' => 'authorization/showAuthorizationPage',
     'authorization' => 'authorization/checkAuthorization',
     'logout' => 'user/logout',
     'signup' => 'registration/showRegistrationPage',
     'registered' => 'registration/createCustomer',
-    'profile' => 'authorization/showWelcomePage',
+    'order' => 'order/order',
+    'isAuthorized' => 'user/isAuthorized',
     '' => 'storage/getProductsByPage'
 );

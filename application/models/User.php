@@ -20,7 +20,7 @@ class User extends ActiveRecordEntity
 
     public function emailExists($email)
     {
-        return $this->db->connection->query("SELECT id, password FROM users WHERE email = '$email'");
+        return $this->db->connection->query("SELECT id, password FROM users WHERE email = '$email'")->fetchAll()[0];
     }
 
 
@@ -42,7 +42,7 @@ class User extends ActiveRecordEntity
 
         else {
             if ($this->emailExists($this->email)) throw new RegistrationException("Account with this email already exists");
-            else $querySent = $this->db->connection->query("INSERT INTO users(name, surname, email, password, phone, role_id, is_blocked) VALUES('{$this->name}', '{$this->surname}', '{$this->email}', '{$this->password}', '{$this->phone}', {$this->roleId}, {$this->isBlocked})");
+            else $this->db->connection->query("INSERT INTO users(name, surname, email, password, phone, role_id, is_blocked) VALUES('{$this->name}', '{$this->surname}', '{$this->email}', '{$this->password}', '{$this->phone}', {$this->roleId}, {$this->isBlocked})");
         }
     }
 

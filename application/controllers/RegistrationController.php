@@ -5,8 +5,10 @@ namespace application\controllers;
 
 use application\components\exceptions\RegistrationException;
 use application\components\exceptions\SessionException;
+use application\models\Product;
 use application\models\User;
 use core\Session;
+use core\View;
 
 class RegistrationController
 {
@@ -47,6 +49,7 @@ class RegistrationController
             $user->roleId = 1;
             $user->isBlocked = 0;
             $user->save();
+            header("Location: /");
         } catch (RegistrationException $e) {
             if (!Session::sessionExists()) Session::start();
             Session::set('registration_err', $e->getMessage());
