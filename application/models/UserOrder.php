@@ -24,7 +24,7 @@ class UserOrder extends ActiveRecordEntity
         }
 
         else {
-            $this->db->connection->query("INSERT INTO users_orders(user_id, note) VALUES({$this->user_id}, '{$this->note}')");
+            return $this->db->connection->query("INSERT INTO users_orders(user_id, note) VALUES({$this->user_id}, '{$this->note}')");
         }
     }
 

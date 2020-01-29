@@ -356,7 +356,16 @@ $(document).ready(() => {
                                     'note': $note
                                 },
                                 success: ($answer) => {
+                                    if ($answer === 'ok') {
+                                        $disappearContainer($(".order-note-container"));
+                                        $appearContainer($(".success.pop-up"));
+                                        $(".success .message").text('Thank you for your order!');
+                                        setTimeout(() => {$disappearContainer($(".success.pop-up"))}, 1500);
+                                    }
 
+                                    else {
+                                        $showErrorInPopUp($(".errors-container"), [$answer]);
+                                    }
                                 }
                             });
                         }

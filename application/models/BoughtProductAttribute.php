@@ -19,7 +19,7 @@ class BoughtProductAttribute extends ActiveRecordEntity
         }
 
         else {
-            $this->db->connection->query("INSERT INTO bought_products_attributes(product_id, attribute_id, order_id) VALUES({$this->product_id}, {$this->attribute_id}, {$this->order_id})");
+            return $this->db->connection->query("INSERT INTO bought_products_attributes(product_id, attribute_id, order_id) VALUES({$this->product_id}, {$this->attribute_id}, {$this->order_id})");
         }
     }
 
