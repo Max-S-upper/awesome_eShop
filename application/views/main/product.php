@@ -5,6 +5,7 @@ if ($usr_email) require_once ROOT.'/application/views/includes/header_signed.php
 else require_once ROOT . '/application/views/includes/header.php';
 require_once ROOT . '/application/views/includes/signInPopUp.php';
 require_once ROOT . '/application/views/includes/orderPopUp.php';
+require_once ROOT . '/application/views/includes/messagePopUp.php';
 require_once ROOT.'/application/views/includes/search.php';
 ?>
 <main>

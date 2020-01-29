@@ -29,7 +29,10 @@ class OrderController
         $userOrder = new UserOrder();
         $userOrder->user_id = $userId;
         $userOrder->note = $note;
-        $userOrder->save();
+        if (!$userOrder->save()) {
+            echo 'There was a problem with saving data to DB';
+            return '';
+        }
 
         $orderId = $userOrder->getLastIdByUserId($userId);
         $order = new Order();
@@ -37,14 +40,22 @@ class OrderController
         $order->orderId = $orderId;
         $order->quantity = $quantity;
         $order->price = $price;
-        $testData = $order->save();
+        if (!$testData = $order->save()) {
+            echo 'There was a problem with saving data to DB';
+            return '';
+        }
 
         foreach ($attributes as $attributeId) {
             $boughtProductAttribute = new BoughtProductAttribute();
             $boughtProductAttribute->product_id = $productId;
             $boughtProductAttribute->attribute_id = $attributeId;
             $boughtProductAttribute->order_id = $orderId;
-            $boughtProductAttribute->save();
+            if (!$boughtProductAttribute->save()) {
+                echo 'There was a problem with saving data to DB';
+                return '';
+            }
         }
+
+        echo 'ok';
     }
 }

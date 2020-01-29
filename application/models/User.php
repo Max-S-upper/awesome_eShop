@@ -42,7 +42,7 @@ class User extends ActiveRecordEntity
 
         else {
             if ($this->emailExists($this->email)) throw new RegistrationException("Account with this email already exists");
-            else $this->db->connection->query("INSERT INTO users(name, surname, email, password, phone, role_id, is_blocked) VALUES('{$this->name}', '{$this->surname}', '{$this->email}', '{$this->password}', '{$this->phone}', {$this->roleId}, {$this->isBlocked})");
+            else return $this->db->connection->query("INSERT INTO users(name, surname, email, password, phone, role_id, is_blocked) VALUES('{$this->name}', '{$this->surname}', '{$this->email}', '{$this->password}', '{$this->phone}', {$this->roleId}, {$this->isBlocked})");
         }
     }
 
