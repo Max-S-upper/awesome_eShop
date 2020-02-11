@@ -15,12 +15,12 @@ $mailData = array(
         "host" => "smtp.gmail.com",
         "port" => 465,
         "encryption" => "ssl",
-        "username" => "maxim.sokolsky@gmail.com",
-        "password" => "Maso88769202",
-        "subject" => "Awesome subject",
-        "fromEmail" => "maxim.sokolsky@gmail.com",
+        "username" => "test@gmail.com",
+        "password" => "password",
+        "subject" => "subject",
+        "fromEmail" => "from@gmail.com",
         "fromName" => "Max",
-        "toEmail" => "totalgol2015@gmail.com",
+        "toEmail" => "reciever@gmail.com",
         "toName" => "Me",
         "message" => "Here is my awesome message for myself:)"
     )
